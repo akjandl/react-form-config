@@ -1,25 +1,59 @@
 import React from "react";
 import { Formik } from "formik";
 
-import Input from "../../Input/Input";
-import { firstName, lastName, streetAddr, city, state } from "./inputConfigs";
+import Input from "../../components/Input/Input";
+import {
+  firstName,
+  middleInitial,
+  lastName,
+  streetAddr,
+  city,
+  state,
+  yearsAtResidence,
+  vehicleMake,
+  vehicleModel,
+} from "./inputConfigs";
 import { validationSchema } from "./validationSchema";
 
+/**
+ * A simple configuration of a form, defined by the inputs included.
+ * A submit handler function is passed into this component in order separate
+ * form rendering/validation logic from what is done with the form values after
+ * they are submitted.
+ */
 const applicationForm = (props) => {
   const { onSubmit } = props;
+
+  /** The initial form values. Keys must match the `name` attribute of inputs */
   const formInitValues = {
+    vehicleMake: "",
+    vehicleModel: "",
     firstName: "",
+    middleInitial: "",
     lastName: "",
     streetAddr: "",
     city: "",
     state: "",
+    yearsAtResidence: "",
   };
-  const inputsArray = [firstName, lastName, streetAddr, city, state];
+
+  /** Ordered array of input configs to be rendered in the form. */
+  const inputsArray = [
+    vehicleMake,
+    vehicleModel,
+    firstName,
+    middleInitial,
+    lastName,
+    streetAddr,
+    city,
+    state,
+    yearsAtResidence,
+  ];
 
   return (
     <Formik
       initialValues={formInitValues}
-      onSubmit={onSubmit} // TODO: add a handler
+      onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
       {({

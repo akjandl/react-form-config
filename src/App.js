@@ -1,11 +1,9 @@
-import './App.css';
+import "./App.css";
 
-import Application from './components/containers/Application/Application';
+import Application from "./containers/Application/Application";
 
 function App() {
-  return (
-    <Application />
-  );
+  return <Application />;
 }
 
 export default App;
