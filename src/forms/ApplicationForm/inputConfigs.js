@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 /**
  * Configuration definitions for form inputs.
  */
@@ -10,6 +12,7 @@ export const firstName = {
   labelText: "First Name",
   type: "text",
   divClass: "col-5",
+  validator: yup.string().required("Required"),
 };
 
 export const middleInitial = {
@@ -18,6 +21,7 @@ export const middleInitial = {
   labelText: "Middle Initial",
   type: "text",
   divClass: "col-2",
+  // validator: yup.string().max(1, "Max 1 character"),
 };
 
 export const lastName = {
@@ -26,6 +30,7 @@ export const lastName = {
   labelText: "Last Name",
   type: "text",
   divClass: "col-5",
+  validator: yup.string().required("Required"),
 };
 
 export const streetAddr = {
@@ -34,6 +39,7 @@ export const streetAddr = {
   labelText: "Street Address",
   type: "text",
   divClass: "col-10",
+  validator: yup.string().required("Required").min(5, "Min 5 characters"),
 };
 
 export const city = {
@@ -42,6 +48,7 @@ export const city = {
   labelText: "City",
   type: "text",
   divClass: "col-6",
+  validator: yup.string().required("Required").min(5, "Min 5 characters"),
 };
 
 export const state = {
@@ -50,6 +57,10 @@ export const state = {
   labelText: "State",
   type: "text",
   divClass: "col-2",
+  validator: yup.string()
+    .required("Required")
+    .min(2, "Use 2 characters")
+    .max(2, "Use 2 characters"),
 };
 
 export const yearsAtResidence = {
@@ -64,6 +75,10 @@ export const yearsAtResidence = {
     max: "99",
     noValidate: true,
   },
+  validator: yup.number()
+    .required("Required")
+    .min(0, "Min 0")
+    .max(99, "Max 99"),
 };
 
 export const vehicleMake = {
@@ -78,6 +93,7 @@ export const vehicleMake = {
     { value: "make_2", displayValue: "Make 2" },
     { value: "make_3", displayValue: "Make 3" },
   ],
+  validator: yup.string().required("Required"),
 };
 
 export const vehicleModel = {
@@ -92,4 +108,5 @@ export const vehicleModel = {
     { value: "model_2", displayValue: "Model 2" },
     { value: "model_3", displayValue: "Model 3" },
   ],
+  validator: yup.string().required("Required"),
 };

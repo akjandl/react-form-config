@@ -13,7 +13,7 @@ import {
   vehicleMake,
   vehicleModel,
 } from "./inputConfigs";
-import { validationSchema } from "./validationSchema";
+import { buildSchemaFromConfigs } from "./validationSchema";
 
 /**
  * A simple configuration of a form, defined by the inputs included.
@@ -49,6 +49,8 @@ const applicationForm = (props) => {
     state,
     yearsAtResidence,
   ];
+
+  const validationSchema = buildSchemaFromConfigs(inputsArray);
 
   return (
     <Formik
