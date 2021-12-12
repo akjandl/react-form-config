@@ -14,7 +14,7 @@ import {
   hasCoapplicant,
 } from "./inputConfigs";
 import { validationSchemaFromInputConfigs } from "../formUtils";
-import Field from "../../components/Field/Field";
+import FormElement from "../../components/FormElement/FormElement";
 import {
   initialValuesFromInputConfigs,
   mapFormikPropsToFieldProps,
@@ -108,7 +108,7 @@ const ApplicationForm = (props) => {
             <div className="row">
               <h3>Vehicle Info</h3>
               {vehicleInputs.map((inputConfig) => (
-                <Field
+                <FormElement
                   key={keyFromInputConfig(inputConfig)}
                   inputConfig={inputConfig}
                   fieldProps={fieldProps}
@@ -119,7 +119,7 @@ const ApplicationForm = (props) => {
             <div className="row">
               <h3>Principal Applicant</h3>
               {applicantInputs.map((inputConfig) => (
-                <Field
+                <FormElement
                   key={keyFromInputConfig(inputConfig)}
                   inputConfig={inputConfig}
                   fieldProps={fieldProps}
@@ -131,7 +131,7 @@ const ApplicationForm = (props) => {
                   <h3>Co-Applicant</h3>
                   {coappInputs.map((inputConfig) => {
                     return (
-                      <Field
+                      <FormElement
                         key={keyFromInputConfig(inputConfig)}
                         inputConfig={inputConfig}
                         fieldProps={fieldProps}

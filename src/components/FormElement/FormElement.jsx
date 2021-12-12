@@ -1,6 +1,6 @@
 import React from "react";
 
-const Field = (props) => {
+const FormElement = (props) => {
   const { inputConfig, fieldProps } = props;
 
   const cfg =
@@ -21,4 +21,4 @@ const Field = (props) => {
   );
 };
 
-export default Field;
+export default FormElement;
