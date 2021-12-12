@@ -19,9 +19,9 @@ export const mapFormikPropsToFieldProps = (formikProps) => {
   };
 };
 
-export const nameFromInputConfig = (inputConfig) => {
+export const keyFromInputConfig = (inputConfig) => {
   const cfg = typeof inputConfig === "function" ? inputConfig({}) : inputConfig;
-  return cfg.name;
+  return cfg.id || cfg.name;
 };
 
 export const validationSchemaFromInputConfigs = (inputConfigs) => {

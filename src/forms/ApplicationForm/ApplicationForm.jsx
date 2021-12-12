@@ -18,7 +18,7 @@ import Field from "../../components/Field/Field";
 import {
   initialValuesFromInputConfigs,
   mapFormikPropsToFieldProps,
-  nameFromInputConfig,
+  keyFromInputConfig,
 } from "../formUtils";
 
 const vehicleInputs = [vehicleMake, vehicleModel];
@@ -34,46 +34,46 @@ const applicantInputs = [
   hasCoapplicant,
 ];
 
-const buildCoappValidator = (inputName) => {
+const buildCoapplicantValidator = (inputConfig) => {
   return (values) => {
-    return values.hasCoapplicant && inputName.validator;
+    return values.hasCoapplicant ? inputConfig.validator : null;
   };
 };
 const coappInputs = [
   {
     ...firstName,
     name: "coapplicantFirstName",
-    validator: buildCoappValidator(firstName),
+    validator: buildCoapplicantValidator(firstName),
   },
   {
     ...middleInitial,
-    name: "coappMiddleInitial",
-    validator: buildCoappValidator(middleInitial),
+    name: "coapplicantMiddleInitial",
+    validator: buildCoapplicantValidator(middleInitial),
   },
   {
     ...lastName,
     name: "coapplicantLastName",
-    validator: buildCoappValidator(lastName),
+    validator: buildCoapplicantValidator(lastName),
   },
   {
     ...streetAddr,
-    name: "coappStreetAddr",
-    validator: buildCoappValidator(streetAddr),
+    name: "coapplicantStreetAddr",
+    validator: buildCoapplicantValidator(streetAddr),
   },
   {
     ...city,
-    name: "coappCity",
-    validator: buildCoappValidator(city),
+    name: "coapplicantCity",
+    validator: buildCoapplicantValidator(city),
   },
   {
     ...state,
-    name: "coappState",
-    validator: buildCoappValidator(state),
+    name: "coapplicantState",
+    validator: buildCoapplicantValidator(state),
   },
   {
     ...yearsAtResidence,
-    name: "coappYearsAtResidence",
-    validator: buildCoappValidator(yearsAtResidence),
+    name: "coapplicantYearsAtResidence",
+    validator: buildCoapplicantValidator(yearsAtResidence),
   },
 ];
 
@@ -109,7 +109,7 @@ const ApplicationForm = (props) => {
               <h3>Vehicle Info</h3>
               {vehicleInputs.map((inputConfig) => (
                 <Field
-                  key={nameFromInputConfig(inputConfig)}
+                  key={keyFromInputConfig(inputConfig)}
                   inputConfig={inputConfig}
                   fieldProps={fieldProps}
                 />
@@ -120,7 +120,7 @@ const ApplicationForm = (props) => {
               <h3>Principal Applicant</h3>
               {applicantInputs.map((inputConfig) => (
                 <Field
-                  key={nameFromInputConfig(inputConfig)}
+                  key={keyFromInputConfig(inputConfig)}
                   inputConfig={inputConfig}
                   fieldProps={fieldProps}
                 />
@@ -132,7 +132,7 @@ const ApplicationForm = (props) => {
                   {coappInputs.map((inputConfig) => {
                     return (
                       <Field
-                        key={nameFromInputConfig(inputConfig)}
+                        key={keyFromInputConfig(inputConfig)}
                         inputConfig={inputConfig}
                         fieldProps={fieldProps}
                       />
