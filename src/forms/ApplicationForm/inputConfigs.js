@@ -124,3 +124,51 @@ export const hasCoapplicant = (values) => {
     initialValue: false,
   };
 };
+
+const buildCoapplicantValidator = (inputConfig) => {
+  return (values) => {
+    return values.hasCoapplicant ? inputConfig.validator : null;
+  };
+};
+
+export const coapplicantFirstName = {
+  ...firstName,
+  name: "coapplicantFirstName",
+  validator: buildCoapplicantValidator(firstName),
+};
+
+export const coapplicantMiddleInitial = {
+  ...middleInitial,
+  name: "coapplicantMiddleInitial",
+  validator: buildCoapplicantValidator(middleInitial),
+};
+
+export const coapplicantLastName = {
+  ...lastName,
+  name: "coapplicantLastName",
+  validator: buildCoapplicantValidator(lastName),
+};
+
+export const coapplicantStreetAddr = {
+  ...streetAddr,
+  name: "coapplicantStreetAddr",
+  validator: buildCoapplicantValidator(streetAddr),
+};
+
+export const coapplicantCity = {
+  ...city,
+  name: "coapplicantCity",
+  validator: buildCoapplicantValidator(city),
+};
+
+export const coapplicantState = {
+  ...state,
+  name: "coapplicantState",
+  validator: buildCoapplicantValidator(state),
+};
+
+export const coapplicantYearsAtResidence = {
+  ...yearsAtResidence,
+  name: "coapplicantYearsAtResidence",
+  validator: buildCoapplicantValidator(yearsAtResidence),
+};

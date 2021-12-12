@@ -12,13 +12,20 @@ import {
   vehicleMake,
   vehicleModel,
   hasCoapplicant,
+  coapplicantFirstName,
+  coapplicantMiddleInitial,
+  coapplicantLastName,
+  coapplicantCity,
+  coapplicantState,
+  coapplicantStreetAddr,
+  coapplicantYearsAtResidence,
 } from "./inputConfigs";
-import { validationSchemaFromInputConfigs } from "../formUtils";
 import FormElement from "../../components/FormElement/FormElement";
 import {
   initialValuesFromInputConfigs,
-  mapFormikPropsToFieldProps,
   keyFromInputConfig,
+  mapFormikPropsToFieldProps,
+  validationSchemaFromInputConfigs
 } from "../formUtils";
 
 const vehicleInputs = [vehicleMake, vehicleModel];
@@ -32,53 +39,27 @@ const applicantInputs = [
   state,
   yearsAtResidence,
   hasCoapplicant,
+  coapplicantFirstName,
+  coapplicantMiddleInitial,
+  coapplicantLastName,
+  coapplicantStreetAddr,
+  coapplicantCity,
+  coapplicantState,
+  coapplicantYearsAtResidence,
 ];
 
-const buildCoapplicantValidator = (inputConfig) => {
-  return (values) => {
-    return values.hasCoapplicant ? inputConfig.validator : null;
-  };
-};
-const coappInputs = [
-  {
-    ...firstName,
-    name: "coapplicantFirstName",
-    validator: buildCoapplicantValidator(firstName),
-  },
-  {
-    ...middleInitial,
-    name: "coapplicantMiddleInitial",
-    validator: buildCoapplicantValidator(middleInitial),
-  },
-  {
-    ...lastName,
-    name: "coapplicantLastName",
-    validator: buildCoapplicantValidator(lastName),
-  },
-  {
-    ...streetAddr,
-    name: "coapplicantStreetAddr",
-    validator: buildCoapplicantValidator(streetAddr),
-  },
-  {
-    ...city,
-    name: "coapplicantCity",
-    validator: buildCoapplicantValidator(city),
-  },
-  {
-    ...state,
-    name: "coapplicantState",
-    validator: buildCoapplicantValidator(state),
-  },
-  {
-    ...yearsAtResidence,
-    name: "coapplicantYearsAtResidence",
-    validator: buildCoapplicantValidator(yearsAtResidence),
-  },
+const coapplicantInputs = [
+  coapplicantFirstName,
+  coapplicantMiddleInitial,
+  coapplicantLastName,
+  coapplicantStreetAddr,
+  coapplicantCity,
+  coapplicantState,
+  coapplicantYearsAtResidence,
 ];
 
 /** array of all input configs to be rendered in the form. */
-const inputsArray = [...vehicleInputs, ...applicantInputs, ...coappInputs];
+const inputsArray = [...vehicleInputs, ...applicantInputs, ...coapplicantInputs];
 
 /**
  * A form composed from input configs.
@@ -129,7 +110,7 @@ const ApplicationForm = (props) => {
               {formikProps.values.hasCoapplicant && (
                 <React.Fragment>
                   <h3>Co-Applicant</h3>
-                  {coappInputs.map((inputConfig) => {
+                  {coapplicantInputs.map((inputConfig) => {
                     return (
                       <FormElement
                         key={keyFromInputConfig(inputConfig)}
