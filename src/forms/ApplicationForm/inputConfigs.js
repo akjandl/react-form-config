@@ -1,5 +1,9 @@
 import * as yup from "yup";
 
+import Checkbox from "../../components/Checkbox/Checkbox";
+import Input from "../../components/Input/Input";
+import Select from "../../components/Select/Select";
+
 /**
  * Configuration definitions for form inputs.
  */
@@ -8,7 +12,7 @@ import * as yup from "yup";
 
 export const firstName = {
   name: "firstName",
-  id: "firstName",
+  component: Input,
   labelText: "First Name",
   type: "text",
   divClass: "col-5",
@@ -17,16 +21,16 @@ export const firstName = {
 
 export const middleInitial = {
   name: "middleInitial",
-  id: "middleInitial",
+  component: Input,
   labelText: "Middle Initial",
   type: "text",
   divClass: "col-2",
-  // validator: yup.string().max(1, "Max 1 character"),
+  validator: yup.string().max(1, "Max 1 character"),
 };
 
 export const lastName = {
   name: "lastName",
-  id: "lastName",
+  component: Input,
   labelText: "Last Name",
   type: "text",
   divClass: "col-5",
@@ -35,7 +39,7 @@ export const lastName = {
 
 export const streetAddr = {
   name: "streetAddr",
-  id: "streetAddr",
+  component: Input,
   labelText: "Street Address",
   type: "text",
   divClass: "col-10",
@@ -44,7 +48,7 @@ export const streetAddr = {
 
 export const city = {
   name: "city",
-  id: "city",
+  component: Input,
   labelText: "City",
   type: "text",
   divClass: "col-6",
@@ -53,11 +57,12 @@ export const city = {
 
 export const state = {
   name: "state",
-  id: "state",
+  component: Input,
   labelText: "State",
   type: "text",
   divClass: "col-2",
-  validator: yup.string()
+  validator: yup
+    .string()
     .required("Required")
     .min(2, "Use 2 characters")
     .max(2, "Use 2 characters"),
@@ -65,7 +70,7 @@ export const state = {
 
 export const yearsAtResidence = {
   name: "yearsAtResidence",
-  id: "yearsAtResidence",
+  component: Input,
   labelText: "Years At Residence",
   type: "number",
   divClass: "col-2",
@@ -75,7 +80,8 @@ export const yearsAtResidence = {
     max: "99",
     noValidate: true,
   },
-  validator: yup.number()
+  validator: yup
+    .number()
     .required("Required")
     .min(0, "Min 0")
     .max(99, "Max 99"),
@@ -83,9 +89,8 @@ export const yearsAtResidence = {
 
 export const vehicleMake = {
   name: "vehicleMake",
-  id: "vehicleMake",
+  component: Select,
   labelText: "Vehicle Make",
-  type: "select",
   divClass: "col-6",
   options: [
     { value: "", displayValue: "", disabled: true },
@@ -98,9 +103,8 @@ export const vehicleMake = {
 
 export const vehicleModel = {
   name: "vehicleModel",
-  id: "vehicleModel",
+  component: Select,
   labelText: "Vehicle Model",
-  type: "select",
   divClass: "col-6",
   options: [
     { value: "", displayValue: "", disabled: true },
@@ -109,4 +113,14 @@ export const vehicleModel = {
     { value: "model_3", displayValue: "Model 3" },
   ],
   validator: yup.string().required("Required"),
+};
+
+export const hasCoapplicant = (values) => {
+  return {
+    name: "hasCoapplicant",
+    component: Checkbox,
+    labelText: "Has Co-Applicant",
+    divClass: "col-12",
+    initialValue: false,
+  };
 };

@@ -3,10 +3,9 @@ import React from "react";
 import InputLabel from "../InputLabel/InputLabel";
 
 /**
- * General component which can render either a text or number input, with label,
- * depending on the configuration provided.
+ * General component which renders a labeled select input
  */
-const Input = (props) => {
+const Select = (props) => {
   const {
     inputConfig,
     value,
@@ -25,16 +24,21 @@ const Input = (props) => {
         labelText={inputConfig.labelText}
         className="mt-2 mb-1 text-nowrap"
       />
-      <input
-        type={inputConfig.type}
+      <select
         id={inputConfig.id || elemName}
         name={elemName}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
-        className="form-control"
+        className="form-select"
         {...inputConfig.other}
-      />
+      >
+        {inputConfig.options.map((opt) => (
+          <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+            {opt.displayValue}
+          </option>
+        ))}
+      </select>
       {validationError && touched ? (
         <div style={{ color: "red" }}>{validationError}</div>
       ) : null}
@@ -42,4 +46,4 @@ const Input = (props) => {
   );
 };
 
-export default Input;
+export default Select;

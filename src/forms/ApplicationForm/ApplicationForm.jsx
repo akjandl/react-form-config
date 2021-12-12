@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 
-import Input from "../../components/Input/Input";
 import {
   firstName,
   middleInitial,
@@ -12,77 +11,136 @@ import {
   yearsAtResidence,
   vehicleMake,
   vehicleModel,
+  hasCoapplicant,
 } from "./inputConfigs";
-import { buildSchemaFromConfigs } from "./validationSchema";
+import { validationSchemaFromInputConfigs } from "../formUtils";
+import Field from "../../components/Field/Field";
+import {
+  initialValuesFromInputConfigs,
+  mapFormikPropsToFieldProps,
+  nameFromInputConfig,
+} from "../formUtils";
+
+const vehicleInputs = [vehicleMake, vehicleModel];
+
+const applicantInputs = [
+  firstName,
+  middleInitial,
+  lastName,
+  streetAddr,
+  city,
+  state,
+  yearsAtResidence,
+  hasCoapplicant,
+];
+
+const buildCoappValidator = (inputName) => {
+  return (values) => {
+    return values.hasCoapplicant && inputName.validator;
+  };
+};
+const coappInputs = [
+  {
+    ...firstName,
+    name: "coapplicantFirstName",
+    validator: buildCoappValidator(firstName),
+  },
+  {
+    ...middleInitial,
+    name: "coappMiddleInitial",
+    validator: buildCoappValidator(middleInitial),
+  },
+  {
+    ...lastName,
+    name: "coapplicantLastName",
+    validator: buildCoappValidator(lastName),
+  },
+  {
+    ...streetAddr,
+    name: "coappStreetAddr",
+    validator: buildCoappValidator(streetAddr),
+  },
+  {
+    ...city,
+    name: "coappCity",
+    validator: buildCoappValidator(city),
+  },
+  {
+    ...state,
+    name: "coappState",
+    validator: buildCoappValidator(state),
+  },
+  {
+    ...yearsAtResidence,
+    name: "coappYearsAtResidence",
+    validator: buildCoappValidator(yearsAtResidence),
+  },
+];
+
+/** array of all input configs to be rendered in the form. */
+const inputsArray = [...vehicleInputs, ...applicantInputs, ...coappInputs];
 
 /**
- * A simple configuration of a form, defined by the inputs included.
+ * A form composed from input configs.
  * A submit handler function is passed into this component in order separate
  * form rendering/validation logic from what is done with the form values after
  * they are submitted.
  */
-const applicationForm = (props) => {
+const ApplicationForm = (props) => {
   const { onSubmit } = props;
 
   /** The initial form values. Keys must match the `name` attribute of inputs */
   const formInitValues = {
-    vehicleMake: "",
-    vehicleModel: "",
-    firstName: "",
-    middleInitial: "",
-    lastName: "",
-    streetAddr: "",
-    city: "",
-    state: "",
-    yearsAtResidence: "",
+    ...initialValuesFromInputConfigs(inputsArray),
   };
-
-  /** Ordered array of input configs to be rendered in the form. */
-  const inputsArray = [
-    vehicleMake,
-    vehicleModel,
-    firstName,
-    middleInitial,
-    lastName,
-    streetAddr,
-    city,
-    state,
-    yearsAtResidence,
-  ];
-
-  const validationSchema = buildSchemaFromConfigs(inputsArray);
 
   return (
     <Formik
       initialValues={formInitValues}
       onSubmit={onSubmit}
-      validationSchema={validationSchema}
+      validationSchema={validationSchemaFromInputConfigs(inputsArray)}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      }) => {
+      {(formikProps) => {
+        const fieldProps = mapFormikPropsToFieldProps(formikProps);
         return (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formikProps.handleSubmit}>
+
             <div className="row">
-              {inputsArray.map((cfg) => {
-                const inputName = cfg.name;
-                return (
-                  <Input
-                    key={inputName}
-                    inputConfig={cfg}
-                    value={values[inputName]}
-                    validationError={errors[inputName]}
-                    touched={touched[inputName]}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                );
-              })}
+              <h3>Vehicle Info</h3>
+              {vehicleInputs.map((inputConfig) => (
+                <Field
+                  key={nameFromInputConfig(inputConfig)}
+                  inputConfig={inputConfig}
+                  fieldProps={fieldProps}
+                />
+              ))}
+            </div>
+
+            <div className="row">
+              <h3>Principal Applicant</h3>
+              {applicantInputs.map((inputConfig) => (
+                <Field
+                  key={nameFromInputConfig(inputConfig)}
+                  inputConfig={inputConfig}
+                  fieldProps={fieldProps}
+                />
+              ))}
+
+              {formikProps.values.hasCoapplicant && (
+                <React.Fragment>
+                  <h3>Co-Applicant</h3>
+                  {coappInputs.map((inputConfig) => {
+                    return (
+                      <Field
+                        key={nameFromInputConfig(inputConfig)}
+                        inputConfig={inputConfig}
+                        fieldProps={fieldProps}
+                      />
+                    );
+                  })}
+                </React.Fragment>
+              )}
+
               <div className="col-12">
                 <div className="row mt-3 justify-content-left">
                   <div className="col-auto">
@@ -100,4 +158,4 @@ const applicationForm = (props) => {
   );
 };
 
-export default applicationForm;
+export default ApplicationForm;
