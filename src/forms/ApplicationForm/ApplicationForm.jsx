@@ -1,5 +1,4 @@
 import React from "react";
-import { Formik } from "formik";
 
 import {
   firstName,
@@ -20,13 +19,8 @@ import {
   coapplicantStreetAddr,
   coapplicantYearsAtResidence,
 } from "./inputConfigs";
-import FormElement from "../../components/FormElement/FormElement";
-import {
-  initialValuesFromInputConfigs,
-  keyFromInputConfig,
-  mapFormikPropsToFieldProps,
-  validationSchemaFromInputConfigs
-} from "../formUtils";
+import FormGroup from "../../components/FormGroup/FormGroup";
+import FormHelper from "../../components/FormHelper/FormHelper";
 
 const vehicleInputs = [vehicleMake, vehicleModel];
 
@@ -39,13 +33,6 @@ const applicantInputs = [
   state,
   yearsAtResidence,
   hasCoapplicant,
-  coapplicantFirstName,
-  coapplicantMiddleInitial,
-  coapplicantLastName,
-  coapplicantStreetAddr,
-  coapplicantCity,
-  coapplicantState,
-  coapplicantYearsAtResidence,
 ];
 
 const coapplicantInputs = [
@@ -59,7 +46,11 @@ const coapplicantInputs = [
 ];
 
 /** array of all input configs to be rendered in the form. */
-const inputsArray = [...vehicleInputs, ...applicantInputs, ...coapplicantInputs];
+const inputsArray = [
+  ...vehicleInputs,
+  ...applicantInputs,
+  ...coapplicantInputs,
+];
 
 /**
  * A form composed from input configs.
@@ -68,74 +59,49 @@ const inputsArray = [...vehicleInputs, ...applicantInputs, ...coapplicantInputs]
  * they are submitted.
  */
 const ApplicationForm = (props) => {
-  const { onSubmit } = props;
-
-  /** The initial form values. Keys must match the `name` attribute of inputs */
-  const formInitValues = {
-    ...initialValuesFromInputConfigs(inputsArray),
-  };
-
   return (
-    <Formik
-      initialValues={formInitValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchemaFromInputConfigs(inputsArray)}
+    <FormHelper
+      inputConfigs={inputsArray}
+      onSubmit={props.onSubmit}
+      overrideDefaultInitialValues={{}}
     >
-      {(formikProps) => {
-        const fieldProps = mapFormikPropsToFieldProps(formikProps);
+      {({ fieldProps, formProps }) => {
         return (
-          <form onSubmit={formikProps.handleSubmit}>
-
+          <form onSubmit={formProps.handleSubmit}>
             <div className="row">
               <h3>Vehicle Info</h3>
-              {vehicleInputs.map((inputConfig) => (
-                <FormElement
-                  key={keyFromInputConfig(inputConfig)}
-                  inputConfig={inputConfig}
-                  fieldProps={fieldProps}
-                />
-              ))}
+              <FormGroup inputConfigs={vehicleInputs} fieldProps={fieldProps} />
             </div>
 
             <div className="row">
               <h3>Principal Applicant</h3>
-              {applicantInputs.map((inputConfig) => (
-                <FormElement
-                  key={keyFromInputConfig(inputConfig)}
-                  inputConfig={inputConfig}
+              <FormGroup
+                inputConfigs={applicantInputs}
+                fieldProps={fieldProps}
+              />
+            </div>
+
+            {fieldProps.values.hasCoapplicant && (
+              <div className="row">
+                <h3>Co-Applicant</h3>
+                <FormGroup
+                  inputConfigs={coapplicantInputs}
                   fieldProps={fieldProps}
                 />
-              ))}
+              </div>
+            )}
 
-              {formikProps.values.hasCoapplicant && (
-                <React.Fragment>
-                  <h3>Co-Applicant</h3>
-                  {coapplicantInputs.map((inputConfig) => {
-                    return (
-                      <FormElement
-                        key={keyFromInputConfig(inputConfig)}
-                        inputConfig={inputConfig}
-                        fieldProps={fieldProps}
-                      />
-                    );
-                  })}
-                </React.Fragment>
-              )}
-
-              <div className="col-12">
-                <div className="row mt-3 justify-content-left">
-                  <div className="col-auto">
-                    <button className="btn btn-primary" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                </div>
+            <div className="row mt-3 justify-content-left">
+              <div className="col-auto">
+                <button className="btn btn-primary" type="submit">
+                  Submit
+                </button>
               </div>
             </div>
           </form>
         );
       }}
-    </Formik>
+    </FormHelper>
   );
 };
 
