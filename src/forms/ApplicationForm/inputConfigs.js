@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import ButtonToggle from "../../components/BottonToggle/ButtonToggle";
 
 import Checkbox from "../../components/Checkbox/Checkbox";
 import Input from "../../components/Input/Input";
@@ -8,14 +9,14 @@ import Select from "../../components/Select/Select";
  * Configuration definitions for form inputs.
  */
 
-// TODO: updated `divClass` attributes to be responsive
+// TODO: updated `className` attributes to be responsive
 
 export const firstName = {
   name: "firstName",
   component: Input,
   labelText: "First Name",
   type: "text",
-  divClass: "col-5",
+  className: "col-5",
   validator: yup.string().required("Required"),
 };
 
@@ -24,7 +25,7 @@ export const middleInitial = {
   component: Input,
   labelText: "Middle Initial",
   type: "text",
-  divClass: "col-2",
+  className: "col-2",
   validator: yup.string().max(1, "Max 1 character"),
 };
 
@@ -33,7 +34,7 @@ export const lastName = {
   component: Input,
   labelText: "Last Name",
   type: "text",
-  divClass: "col-5",
+  className: "col-5",
   validator: yup.string().required("Required"),
 };
 
@@ -42,7 +43,7 @@ export const streetAddr = {
   component: Input,
   labelText: "Street Address",
   type: "text",
-  divClass: "col-10",
+  className: "col-10",
   validator: yup.string().required("Required").min(5, "Min 5 characters"),
 };
 
@@ -51,7 +52,7 @@ export const city = {
   component: Input,
   labelText: "City",
   type: "text",
-  divClass: "col-6",
+  className: "col-6",
   validator: yup.string().required("Required").min(5, "Min 5 characters"),
 };
 
@@ -60,7 +61,7 @@ export const state = {
   component: Input,
   labelText: "State",
   type: "text",
-  divClass: "col-2",
+  className: "col-2",
   validator: yup
     .string()
     .required("Required")
@@ -73,7 +74,7 @@ export const yearsAtResidence = {
   component: Input,
   labelText: "Years At Residence",
   type: "number",
-  divClass: "col-2",
+  className: "col-2",
   other: {
     min: "0",
     step: "1",
@@ -91,7 +92,7 @@ export const vehicleMake = {
   name: "vehicleMake",
   component: Select,
   labelText: "Vehicle Make",
-  divClass: "col-6",
+  className: "col-6",
   options: [
     { value: "", displayValue: "", disabled: true },
     { value: "make_1", displayValue: "Make 1" },
@@ -105,7 +106,7 @@ export const vehicleModel = {
   name: "vehicleModel",
   component: Select,
   labelText: "Vehicle Model",
-  divClass: "col-6",
+  className: "col-6",
   options: [
     { value: "", displayValue: "", disabled: true },
     { value: "model_1", displayValue: "Model 1" },
@@ -120,7 +121,7 @@ export const hasCoapplicant = (values) => {
     name: "hasCoapplicant",
     component: Checkbox,
     labelText: "Has Co-Applicant",
-    divClass: "col-12",
+    className: "col-12 mt-2",
     initialValue: false,
   };
 };
@@ -172,3 +173,40 @@ export const coapplicantYearsAtResidence = {
   name: "coapplicantYearsAtResidence",
   validator: buildCoapplicantValidator(yearsAtResidence),
 };
+
+export const hasTradeIn = {
+  name: "hasTradeIn",
+  component: ButtonToggle,
+  labelText: "Has Trade In",
+  buttonConfigs: [
+    {divClassName: "col-auto", name: "yes", value: true, text: "Yes"},
+    {divClassName: "col-auto", name: "no", value: false, text: "No"},
+  ]
+};
+
+export const vehicleInputs = [
+  vehicleMake,
+  vehicleModel,
+  hasTradeIn,
+];
+
+export const applicantInputs = [
+  hasCoapplicant,
+  firstName,
+  middleInitial,
+  lastName,
+  streetAddr,
+  city,
+  state,
+  yearsAtResidence,
+];
+
+export const coapplicantInputs = [
+  coapplicantFirstName,
+  coapplicantMiddleInitial,
+  coapplicantLastName,
+  coapplicantStreetAddr,
+  coapplicantCity,
+  coapplicantState,
+  coapplicantYearsAtResidence,
+];

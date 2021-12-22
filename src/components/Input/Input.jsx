@@ -7,19 +7,13 @@ import InputLabel from "../InputLabel/InputLabel";
  * depending on the configuration provided.
  */
 const Input = (props) => {
-  const {
-    inputConfig,
-    value,
-    validationError,
-    touched,
-    handleChange,
-    handleBlur,
-    className,
-  } = props;
+  const { className, inputConfig, fieldProps } = props;
+
   const elemName = inputConfig.name;
+  const validationError = fieldProps.errors[elemName];
 
   return (
-    <div className={className || inputConfig.divClass}>
+    <div className={className || inputConfig.className}>
       <InputLabel
         labelFor={elemName}
         labelText={inputConfig.labelText}
@@ -29,13 +23,13 @@ const Input = (props) => {
         type={inputConfig.type}
         id={inputConfig.id || elemName}
         name={elemName}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        value={fieldProps.values[elemName]}
+        onChange={fieldProps.handleChange}
+        onBlur={fieldProps.handleBlur}
         className="form-control"
         {...inputConfig.other}
       />
-      {validationError && touched ? (
+      {validationError && fieldProps.touched[elemName] ? (
         <div style={{ color: "red" }}>{validationError}</div>
       ) : null}
     </div>

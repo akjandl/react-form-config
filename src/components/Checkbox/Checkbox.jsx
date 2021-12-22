@@ -6,20 +6,20 @@ import InputLabel from "../InputLabel/InputLabel";
  * General component which renders a checkbox
  */
 const Checkbox = (props) => {
-  const { inputConfig, value, handleChange, handleBlur, className } = props;
+  const { inputConfig, fieldProps, className } = props;
   const elemName = inputConfig.name;
 
   return (
-    <div className={className || inputConfig.divClass}>
+    <div className={className || inputConfig.className}>
       <div className="form-check">
         <input
           type="checkbox"
           id={inputConfig.id || elemName}
           name={elemName}
-          value={value}
-          checked={value || false}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          value={fieldProps.values[elemName]}
+          checked={fieldProps.values[elemName] || false}
+          onChange={fieldProps.handleChange}
+          onBlur={fieldProps.handleBlur}
           className="form-check-input"
           {...inputConfig.other}
         />

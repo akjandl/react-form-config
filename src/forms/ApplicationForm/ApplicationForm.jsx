@@ -1,49 +1,13 @@
 import React from "react";
 
 import {
-  firstName,
-  middleInitial,
-  lastName,
-  streetAddr,
-  city,
-  state,
-  yearsAtResidence,
-  vehicleMake,
-  vehicleModel,
-  hasCoapplicant,
-  coapplicantFirstName,
-  coapplicantMiddleInitial,
-  coapplicantLastName,
-  coapplicantCity,
-  coapplicantState,
-  coapplicantStreetAddr,
-  coapplicantYearsAtResidence,
+  vehicleInputs,
+  applicantInputs,
+  coapplicantInputs,
 } from "./inputConfigs";
 import FormGroup from "../../components/FormGroup/FormGroup";
 import FormHelper from "../../components/FormHelper/FormHelper";
 
-const vehicleInputs = [vehicleMake, vehicleModel];
-
-const applicantInputs = [
-  firstName,
-  middleInitial,
-  lastName,
-  streetAddr,
-  city,
-  state,
-  yearsAtResidence,
-  hasCoapplicant,
-];
-
-const coapplicantInputs = [
-  coapplicantFirstName,
-  coapplicantMiddleInitial,
-  coapplicantLastName,
-  coapplicantStreetAddr,
-  coapplicantCity,
-  coapplicantState,
-  coapplicantYearsAtResidence,
-];
 
 /** array of all input configs to be rendered in the form. */
 const inputsArray = [
@@ -68,12 +32,12 @@ const ApplicationForm = (props) => {
       {({ fieldProps, formProps }) => {
         return (
           <form onSubmit={formProps.handleSubmit}>
-            <div className="row">
+            <div className="row mt-3">
               <h3>Vehicle Info</h3>
               <FormGroup inputConfigs={vehicleInputs} fieldProps={fieldProps} />
             </div>
 
-            <div className="row">
+            <div className="row mt-3">
               <h3>Principal Applicant</h3>
               <FormGroup
                 inputConfigs={applicantInputs}
@@ -82,7 +46,7 @@ const ApplicationForm = (props) => {
             </div>
 
             {fieldProps.values.hasCoapplicant && (
-              <div className="row">
+              <div className="row mt-3">
                 <h3>Co-Applicant</h3>
                 <FormGroup
                   inputConfigs={coapplicantInputs}

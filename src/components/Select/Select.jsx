@@ -6,19 +6,12 @@ import InputLabel from "../InputLabel/InputLabel";
  * General component which renders a labeled select input
  */
 const Select = (props) => {
-  const {
-    inputConfig,
-    value,
-    validationError,
-    touched,
-    handleChange,
-    handleBlur,
-    className,
-  } = props;
+  const { inputConfig, fieldProps, className } = props;
   const elemName = inputConfig.name;
+  const validationError = fieldProps.errors[elemName];
 
   return (
-    <div className={className || inputConfig.divClass}>
+    <div className={className || inputConfig.className}>
       <InputLabel
         labelFor={elemName}
         labelText={inputConfig.labelText}
@@ -27,9 +20,9 @@ const Select = (props) => {
       <select
         id={inputConfig.id || elemName}
         name={elemName}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        value={fieldProps.values[elemName]}
+        onChange={fieldProps.handleChange}
+        onBlur={fieldProps.handleBlur}
         className="form-select"
         {...inputConfig.other}
       >
@@ -39,7 +32,7 @@ const Select = (props) => {
           </option>
         ))}
       </select>
-      {validationError && touched ? (
+      {validationError && fieldProps.touched[elemName] ? (
         <div style={{ color: "red" }}>{validationError}</div>
       ) : null}
     </div>

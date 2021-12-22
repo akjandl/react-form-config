@@ -16,6 +16,7 @@ export const mapFormikPropsToFieldProps = (formikProps) => {
     touched: formikProps.touched,
     handleChange: formikProps.handleChange,
     handleBlur: formikProps.handleBlur,
+    setFieldValue: formikProps.setFieldValue,
   };
 };
 
