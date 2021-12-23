@@ -1,20 +1,21 @@
 import React from "react";
 
-import {
-  vehicleInputs,
-  applicantInputs,
-  coapplicantInputs,
-} from "./inputConfigs";
 import FormGroup from "../../components/FormGroup/FormGroup";
 import FormHelper from "../../components/FormHelper/FormHelper";
+import {
+  vehicleGroupInputs,
+  applicantGroupInputs,
+  coapplicantGroupInputs,
+} from "../inputConfigs/formGroupConfigs";
 
-
-/** array of all input configs to be rendered in the form. */
-const inputsArray = [
+const applicantInputs = applicantGroupInputs;
+const vehicleInputs = vehicleGroupInputs;
+const coapplicantInputs = coapplicantGroupInputs;
+const formInputConfigs = {
   ...vehicleInputs,
   ...applicantInputs,
   ...coapplicantInputs,
-];
+};
 
 /**
  * A form composed from input configs.
@@ -25,7 +26,7 @@ const inputsArray = [
 const ApplicationForm = (props) => {
   return (
     <FormHelper
-      inputConfigs={inputsArray}
+      inputConfigs={formInputConfigs}
       onSubmit={props.onSubmit}
       overrideDefaultInitialValues={{}}
     >

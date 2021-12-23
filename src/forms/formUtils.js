@@ -1,8 +1,9 @@
 import * as yup from "yup";
 
-const FALSY_INITIAL_VALUE_TYPES = ["boolean", "undefined"]
+const FALSY_INITIAL_VALUE_TYPES = ["boolean"]
 
-export const initialValuesFromInputConfigs = (inputsArray) => {
+export const initialValuesFromInputConfigs = (inputConfigs) => {
+  const inputsArray = Object.values(inputConfigs)
   return inputsArray.reduce((acc, inputConfig) => {
     const inp =
       typeof inputConfig === "function" ? inputConfig({}) : inputConfig;
@@ -36,7 +37,7 @@ export const keyFromInputConfig = (inputConfig) => {
 export const validationSchemaFromInputConfigs = (inputConfigs) => {
   return yup.lazy((formValues) => {
     return yup.object().shape(
-      inputConfigs.reduce((acc, inp) => {
+      Object.values(inputConfigs).reduce((acc, inp) => {
         acc[inp.name] =
           typeof inp.validator === "function"
             ? inp.validator(formValues)

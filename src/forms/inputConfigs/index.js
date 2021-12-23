@@ -185,30 +185,3 @@ export const hasTradeIn = {
     {divClassName: "col-auto", value: true, text: "Yes"},
   ]
 };
-
-export const vehicleInputs = [
-  vehicleMake,
-  vehicleModel,
-  hasTradeIn,
-];
-
-export const applicantInputs = [
-  hasCoapplicant,
-  firstName,
-  middleInitial,
-  lastName,
-  streetAddr,
-  city,
-  state,
-  yearsAtResidence,
-];
-
-export const coapplicantInputs = [
-  coapplicantFirstName,
-  coapplicantMiddleInitial,
-  coapplicantLastName,
-  coapplicantStreetAddr,
-  coapplicantCity,
-  coapplicantState,
-  coapplicantYearsAtResidence,
-];
