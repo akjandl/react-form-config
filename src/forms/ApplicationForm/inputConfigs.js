@@ -178,9 +178,11 @@ export const hasTradeIn = {
   name: "hasTradeIn",
   component: ButtonToggle,
   labelText: "Has Trade In",
+  validator: yup.boolean().required("Required"),
+  initialValue: false,
   buttonConfigs: [
-    {divClassName: "col-auto", name: "yes", value: true, text: "Yes"},
-    {divClassName: "col-auto", name: "no", value: false, text: "No"},
+    {divClassName: "col-auto", value: false, text: "No"},
+    {divClassName: "col-auto", value: true, text: "Yes"},
   ]
 };
 

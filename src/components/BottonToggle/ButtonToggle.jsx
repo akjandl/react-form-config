@@ -7,6 +7,7 @@ const ButtonToggle = (props) => {
 
   const { buttonConfigs } = inputConfig;
   const elemName = inputConfig.name;
+  const validationError = fieldProps.errors[elemName];
 
   const clickHandler = (name, value) => {
     fieldProps.setFieldValue(name, value);
@@ -20,28 +21,34 @@ const ButtonToggle = (props) => {
           labelText={inputConfig.labelText}
           className="mt-2 mb-1 text-nowrap"
         />
-        {buttonConfigs.map((btnConfig) => {
-          return (
-            <div
-              key={btnConfig.name}
-              className={btnConfig.divClassName}
-              onBlur={() => fieldProps.handleBlur(inputConfig.name)}
-            >
-              <button
-                type={btnConfig.buttonType || "button"}
-                onClick={() => clickHandler(elemName, btnConfig.value)}
-                className={`btn ${
-                  btnConfig.value === fieldProps.values[elemName]
-                    ? "btn-primary"
-                    : "btn-outline-secondary"
-                }`}
-              >
-                {btnConfig.text}
-              </button>
-            </div>
-          );
-        })}
+        <div className="col-12">
+          <div className="row" onBlur={fieldProps.handleBlur(elemName)}>
+            {buttonConfigs.map((btnConfig) => {
+              return (
+                <div
+                  key={`${elemName}${btnConfig.text}${btnConfig.value}`}
+                  className={btnConfig.divClassName}
+                >
+                  <button
+                    type={btnConfig.buttonType || "button"}
+                    onClick={() => clickHandler(elemName, btnConfig.value)}
+                    className={`btn ${
+                      btnConfig.value === fieldProps.values[elemName]
+                        ? "btn-primary"
+                        : "btn-outline-secondary"
+                    }`}
+                  >
+                    {btnConfig.text}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
+      {validationError && fieldProps.touched[elemName] ? (
+        <div style={{ color: "red" }}>{validationError}</div>
+      ) : null}
     </div>
   );
 };

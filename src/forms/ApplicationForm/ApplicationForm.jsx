@@ -18,7 +18,7 @@ const inputsArray = [
 
 /**
  * A form composed from input configs.
- * A submit handler function is passed into this component in order separate
+ * A submit handler function is passed as a prop in order to separate
  * form rendering/validation logic from what is done with the form values after
  * they are submitted.
  */

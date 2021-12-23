@@ -1,10 +1,16 @@
 import * as yup from "yup";
 
+const FALSY_INITIAL_VALUE_TYPES = ["boolean", "undefined"]
+
 export const initialValuesFromInputConfigs = (inputsArray) => {
   return inputsArray.reduce((acc, inputConfig) => {
     const inp =
       typeof inputConfig === "function" ? inputConfig({}) : inputConfig;
-    acc[inp.name] = inp.initialValue || "";
+    const value =
+      FALSY_INITIAL_VALUE_TYPES.includes(typeof inp.initialValue)
+        ? inp.initialValue
+        : inp.initialValue || "";
+    acc[inp.name] = value;
     return acc;
   }, {});
 };
@@ -17,6 +23,8 @@ export const mapFormikPropsToFieldProps = (formikProps) => {
     handleChange: formikProps.handleChange,
     handleBlur: formikProps.handleBlur,
     setFieldValue: formikProps.setFieldValue,
+    setFieldTouched: formikProps.setFieldTouched,
+    setFieldError: formikProps.setFieldError,
   };
 };
 
