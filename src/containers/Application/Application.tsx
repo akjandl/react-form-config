@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { FormActions } from "../../forms/formUtils";
 
 import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
+import { FormValues } from "../../forms/formUtils";
 
 /**
  * Component to render form and ancillary elements related to the form.
@@ -8,9 +10,11 @@ import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
  * order to keep the form agnostic as to what is done with form values.
  */
 const Application = () => {
-  const [submittedValues, setSubmittedValues] = useState();
+  const [submittedValues, setSubmittedValues] = useState<
+    FormValues | undefined
+  >();
 
-  const onSubmit = (values, _actions) => {
+  const onSubmit = (values: FormValues, _actions: FormActions) => {
     setSubmittedValues(values);
   };
 
