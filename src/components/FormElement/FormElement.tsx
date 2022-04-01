@@ -2,7 +2,7 @@ import { FieldKit } from "../../forms/formUtils";
 import {
   FieldConfigAny,
   FIELD_TYPE_TO_COMPONENT,
-  FieldConfigBase,
+  FieldConfigObject,
 } from "../../forms/inputConfigs";
 
 export interface FormElementProps<FC extends FieldConfigAny> {
@@ -16,15 +16,15 @@ const FormElement: <FC extends FieldConfigAny>(
 ) => JSX.Element = (props) => {
   const { fieldConfig, fieldKit, className } = props;
 
-  const cfg: FieldConfigBase =
+  const cfg: FieldConfigObject =
     typeof fieldConfig === "function"
       ? fieldConfig(fieldKit.values)
       : fieldConfig;
 
-  const Component = FIELD_TYPE_TO_COMPONENT[cfg.type];
+  const Component = FIELD_TYPE_TO_COMPONENT[cfg.type] as any;  // TODO: figure out how to type this accurately
 
   return (
-    <Component inputConfig={cfg} fieldProps={fieldKit} className={className} />
+    <Component fieldConfig={cfg} fieldKit={fieldKit} className={className} />
   );
 };
 

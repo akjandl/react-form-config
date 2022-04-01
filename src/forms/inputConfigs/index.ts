@@ -6,6 +6,7 @@ import ButtonToggle, {
 import Checkbox, {
   CheckboxFieldConfig,
 } from "../../components/Checkbox/Checkbox";
+import { FormElementProps } from "../../components/FormElement/FormElement";
 import Input, { InputFieldConfig } from "../../components/Input/Input";
 import Select, { SelectFieldConfig } from "../../components/Select/Select";
 import { FormValues } from "../formUtils";
@@ -21,8 +22,15 @@ export type FieldType =
   | typeof CHECKBOX
   | typeof BUTTON_TOGGLE;
 
+export type FieldComponent =
+  | typeof Input
+  | typeof Select
+  | typeof Checkbox
+  | typeof ButtonToggle
+
 export const FIELD_TYPE_TO_COMPONENT: {
-  [key in FieldType]: (props: any) => JSX.Element;
+  // [key in FieldType]: (props: FormElementProps<FieldConfigAny>) => JSX.Element;
+  [key in FieldType]: FieldComponent;
 } = {
   [INPUT]: Input,
   [SELECT]: Select,
