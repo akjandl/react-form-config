@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { BUTTON_TOGGLE, FieldConfigBase } from "../../forms/inputConfigs";
+import { BUTTON_TOGGLE, FieldConfigObject } from "../../forms/inputConfigs";
 import { FormElementProps } from "../FormElement/FormElement";
 
-export interface ButtonToggleFieldConfig extends FieldConfigBase {
+export interface ButtonToggleFieldConfig extends FieldConfigObject {
   type: typeof BUTTON_TOGGLE;
   labelText: string;
   buttonConfigs: ButtonConfig[];

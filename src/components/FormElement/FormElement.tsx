@@ -11,9 +11,11 @@ export interface FormElementProps<FC extends FieldConfigAny> {
   className?: string;
 }
 
-const FormElement: <FC extends FieldConfigAny>(
-  props: FormElementProps<FC>
-) => JSX.Element = (props) => {
+interface IFormElement<FC extends FieldConfigAny> {
+  (props: FormElementProps<FC>): JSX.Element;
+}
+
+const FormElement: IFormElement<FieldConfigAny> = (props) => {
   const { fieldConfig, fieldKit, className } = props;
 
   const cfg: FieldConfigObject =
@@ -21,7 +23,9 @@ const FormElement: <FC extends FieldConfigAny>(
       ? fieldConfig(fieldKit.values)
       : fieldConfig;
 
-  const Component = FIELD_TYPE_TO_COMPONENT[cfg.type] as any;  // TODO: figure out how to type this accurately
+  const Component = FIELD_TYPE_TO_COMPONENT[
+    cfg.type
+  ] as IFormElement<FieldConfigObject>;
 
   return (
     <Component fieldConfig={cfg} fieldKit={fieldKit} className={className} />

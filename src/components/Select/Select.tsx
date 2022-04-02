@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FieldConfigBase, SELECT } from "../../forms/inputConfigs";
+import { FieldConfigObject, SELECT } from "../../forms/inputConfigs";
 import { FormElementProps } from "../FormElement/FormElement";
 
-export interface SelectFieldConfig extends FieldConfigBase {
+export interface SelectFieldConfig extends FieldConfigObject {
   type: typeof SELECT;
   labelText: string;
   options: {

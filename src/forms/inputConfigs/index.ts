@@ -3,10 +3,7 @@ import * as yup from "yup";
 import ButtonToggle, {
   ButtonToggleFieldConfig,
 } from "../../components/ButtonToggle/ButtonToggle";
-import Checkbox, {
-  CheckboxFieldConfig,
-} from "../../components/Checkbox/Checkbox";
-import { FormElementProps } from "../../components/FormElement/FormElement";
+import Checkbox from "../../components/Checkbox/Checkbox";
 import Input, { InputFieldConfig } from "../../components/Input/Input";
 import Select, { SelectFieldConfig } from "../../components/Select/Select";
 import { FormValues } from "../formUtils";
@@ -16,31 +13,22 @@ export const SELECT = "SELECT";
 export const BUTTON_TOGGLE = "BUTTON_TOGGLE";
 export const CHECKBOX = "CHECKBOX";
 
-export type FieldType =
+type FieldType =
   | typeof INPUT
   | typeof SELECT
   | typeof CHECKBOX
   | typeof BUTTON_TOGGLE;
 
-export type FieldComponent =
-  | typeof Input
-  | typeof Select
-  | typeof Checkbox
-  | typeof ButtonToggle
-
-export const FIELD_TYPE_TO_COMPONENT: {
-  // [key in FieldType]: (props: FormElementProps<FieldConfigAny>) => JSX.Element;
-  [key in FieldType]: FieldComponent;
-} = {
+export const FIELD_TYPE_TO_COMPONENT = {
   [INPUT]: Input,
   [SELECT]: Select,
   [CHECKBOX]: Checkbox,
   [BUTTON_TOGGLE]: ButtonToggle,
 };
 
-export interface FieldConfigBase {
-  name: string;
+export interface FieldConfigObject {
   type: FieldType;
+  name: string;
   validator:
     | yup.AnySchema
     | null
@@ -49,15 +37,9 @@ export interface FieldConfigBase {
   id?: string;
 }
 
-export type FieldConfigObject =
-  | InputFieldConfig
-  | SelectFieldConfig
-  | CheckboxFieldConfig
-  | ButtonToggleFieldConfig;
-
-export type FieldConfigFunc<ReturnType = FieldConfigObject> = (
+export type FieldConfigFunc = (
   values: FormValues
-) => ReturnType;
+) => FieldConfigObject;
 
 export type FieldConfigAny = FieldConfigObject | FieldConfigFunc;
 
@@ -174,7 +156,7 @@ export const vehicleModel: SelectFieldConfig = {
   validator: yup.string().required("Required"),
 };
 
-export const hasCoapplicant: FieldConfigFunc<CheckboxFieldConfig> = (
+export const hasCoapplicant: FieldConfigFunc = (
   values: FormValues
 ) => {
   return {

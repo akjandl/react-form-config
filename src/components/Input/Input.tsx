@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
 import { FormElementProps } from "../FormElement/FormElement";
-import { FieldConfigBase, INPUT } from "../../forms/inputConfigs";
+import { FieldConfigObject, INPUT } from "../../forms/inputConfigs";
 
-export interface InputFieldConfig extends FieldConfigBase {
+export interface InputFieldConfig extends FieldConfigObject {
   type: typeof INPUT;
   labelText: string;
   className: string;

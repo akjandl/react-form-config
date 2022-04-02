@@ -1,8 +1,8 @@
-import { FieldConfigBase, CHECKBOX } from "../../forms/inputConfigs";
+import { FieldConfigObject, CHECKBOX } from "../../forms/inputConfigs";
 import { FormElementProps } from "../FormElement/FormElement";
 import InputLabel from "../InputLabel/InputLabel";
 
-export interface CheckboxFieldConfig extends FieldConfigBase {
+export interface CheckboxFieldConfig extends FieldConfigObject {
   type: typeof CHECKBOX;
   labelText: string;
   other?: object;
