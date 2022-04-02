@@ -3,31 +3,39 @@ import * as yup from "yup";
 import ButtonToggle, {
   ButtonToggleFieldConfig,
 } from "../../components/ButtonToggle/ButtonToggle";
-import Checkbox from "../../components/Checkbox/Checkbox";
+import Checkbox, { CheckboxFieldConfig } from "../../components/Checkbox/Checkbox";
 import Input, { InputFieldConfig } from "../../components/Input/Input";
 import Select, { SelectFieldConfig } from "../../components/Select/Select";
-import { FormValues } from "../formUtils";
+import { FormValues, FieldKit } from "../formUtils";
 
-export const INPUT = "INPUT";
-export const SELECT = "SELECT";
-export const BUTTON_TOGGLE = "BUTTON_TOGGLE";
-export const CHECKBOX = "CHECKBOX";
-
-type FieldType =
-  | typeof INPUT
-  | typeof SELECT
-  | typeof CHECKBOX
-  | typeof BUTTON_TOGGLE;
-
-export const FIELD_TYPE_TO_COMPONENT = {
-  [INPUT]: Input,
-  [SELECT]: Select,
-  [CHECKBOX]: Checkbox,
-  [BUTTON_TOGGLE]: ButtonToggle,
+export interface FieldConfigObject<
+  FCP extends FieldConfigProps
+> extends FieldComponent<FCP> {
+  config: FCP;
 };
 
-export interface FieldConfigObject {
-  type: FieldType;
+export interface FormComponentProps<FC extends FieldConfigProps> {
+  fieldConfig: FC;
+  fieldKit: FieldKit;
+  className?: string;
+}
+
+export type FieldConfigFunc<FCP extends FieldConfigProps> = (
+  values: FormValues
+) => FieldConfigObject<FCP>;
+
+export type FieldConfigAny = FieldConfigObject<any> | FieldConfigFunc<any>;
+
+export interface FieldConfigBundle {
+  [key: string]: FieldConfigAny;
+}
+
+interface FieldComponent<FCP extends FieldConfigProps> {
+  Component: (props: FormComponentProps<FCP>) => JSX.Element;
+}
+
+export interface FieldConfigProps {
+  type?: string;
   name: string;
   validator:
     | yup.AnySchema
@@ -37,198 +45,231 @@ export interface FieldConfigObject {
   id?: string;
 }
 
-export type FieldConfigFunc = (
-  values: FormValues
-) => FieldConfigObject;
-
-export type FieldConfigAny = FieldConfigObject | FieldConfigFunc;
-
-export interface FieldConfigBundle {
-  [key: string]: FieldConfigAny;
-}
-
 /**
  * Configuration definitions for form inputs.
  */
 
-export const firstName: InputFieldConfig = {
-  type: INPUT,
-  name: "firstName",
-  labelText: "First Name",
-  inputType: "text",
-  className: "col-5",
-  validator: yup.string().required("Required"),
+export const firstName: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "firstName",
+    labelText: "First Name",
+    inputType: "text",
+    className: "col-5",
+    validator: yup.string().required("Required"),
+  }
 };
 
-export const middleInitial: InputFieldConfig = {
-  type: INPUT,
-  name: "middleInitial",
-  labelText: "Middle Initial",
-  inputType: "text",
-  className: "col-2",
-  validator: yup.string().max(1, "Max 1 character"),
+export const middleInitial: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "middleInitial",
+    labelText: "Middle Initial",
+    inputType: "text",
+    className: "col-2",
+    validator: yup.string().max(1, "Max 1 character"),
+  }
 };
 
-export const lastName: InputFieldConfig = {
-  type: INPUT,
-  name: "lastName",
-  labelText: "Last Name",
-  inputType: "text",
-  className: "col-5",
-  validator: yup.string().required("Required"),
+export const lastName: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "lastName",
+    labelText: "Last Name",
+    inputType: "text",
+    className: "col-5",
+    validator: yup.string().required("Required"),
+  }
 };
 
-export const streetAddr: InputFieldConfig = {
-  type: INPUT,
-  name: "streetAddr",
-  labelText: "Street Address",
-  inputType: "text",
-  className: "col-10",
-  validator: yup.string().required("Required").min(5, "Min 5 characters"),
+export const streetAddr: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "streetAddr",
+    labelText: "Street Address",
+    inputType: "text",
+    className: "col-10",
+    validator: yup.string().required("Required").min(5, "Min 5 characters"),
+  }
 };
 
-export const city: InputFieldConfig = {
-  type: INPUT,
-  name: "city",
-  labelText: "City",
-  inputType: "text",
-  className: "col-6",
-  validator: yup.string().required("Required").min(5, "Min 5 characters"),
+export const city: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "city",
+    labelText: "City",
+    inputType: "text",
+    className: "col-6",
+    validator: yup.string().required("Required").min(5, "Min 5 characters"),
+  }
 };
 
-export const state: InputFieldConfig = {
-  type: INPUT,
-  name: "state",
-  labelText: "State",
-  inputType: "text",
-  className: "col-2",
-  validator: yup
-    .string()
-    .required("Required")
-    .min(2, "Use 2 characters")
-    .max(2, "Use 2 characters"),
+export const state: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "state",
+    labelText: "State",
+    inputType: "text",
+    className: "col-2",
+    validator: yup
+      .string()
+      .required("Required")
+      .min(2, "Use 2 characters")
+      .max(2, "Use 2 characters"),
+  }
 };
 
-export const yearsAtResidence: InputFieldConfig = {
-  type: INPUT,
-  name: "yearsAtResidence",
-  labelText: "Years At Residence",
-  inputType: "number",
-  className: "col-2",
-  other: {
-    min: "0",
-    step: "1",
-    max: "99",
-    noValidate: true,
-  },
-  validator: yup
-    .number()
-    .required("Required")
-    .min(0, "Min 0")
-    .max(99, "Max 99"),
+export const yearsAtResidence: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "yearsAtResidence",
+    labelText: "Years At Residence",
+    inputType: "number",
+    className: "col-2",
+    other: {
+      min: "0",
+      step: "1",
+      max: "99",
+      noValidate: true,
+    },
+    validator: yup
+      .number()
+      .required("Required")
+      .min(0, "Min 0")
+      .max(99, "Max 99"),
+  }
 };
 
-export const vehicleMake: SelectFieldConfig = {
-  type: SELECT,
-  name: "vehicleMake",
-  labelText: "Vehicle Make",
-  className: "col-6",
-  options: [
-    { value: "", displayValue: "", disabled: true },
-    { value: "make_1", displayValue: "Make 1" },
-    { value: "make_2", displayValue: "Make 2" },
-    { value: "make_3", displayValue: "Make 3" },
-  ],
-  validator: yup.string().required("Required"),
+export const vehicleMake: FieldConfigObject<SelectFieldConfig> = {
+  Component: Select,
+  config: {
+    name: "vehicleMake",
+    labelText: "Vehicle Make",
+    className: "col-6",
+    options: [
+      { value: "", displayValue: "", disabled: true },
+      { value: "make_1", displayValue: "Make 1" },
+      { value: "make_2", displayValue: "Make 2" },
+      { value: "make_3", displayValue: "Make 3" },
+    ],
+    validator: yup.string().required("Required"),
+  }
 };
 
-export const vehicleModel: SelectFieldConfig = {
-  type: SELECT,
-  name: "vehicleModel",
-  labelText: "Vehicle Model",
-  className: "col-6",
-  options: [
-    { value: "", displayValue: "", disabled: true },
-    { value: "model_1", displayValue: "Model 1" },
-    { value: "model_2", displayValue: "Model 2" },
-    { value: "model_3", displayValue: "Model 3" },
-  ],
-  validator: yup.string().required("Required"),
+export const vehicleModel: FieldConfigObject<SelectFieldConfig> = {
+  Component: Select,
+  config: {
+    name: "vehicleModel",
+    labelText: "Vehicle Model",
+    className: "col-6",
+    options: [
+      { value: "", displayValue: "", disabled: true },
+      { value: "model_1", displayValue: "Model 1" },
+      { value: "model_2", displayValue: "Model 2" },
+      { value: "model_3", displayValue: "Model 3" },
+    ],
+    validator: yup.string().required("Required"),
+  }
 };
 
-export const hasCoapplicant: FieldConfigFunc = (
+export const hasCoapplicant: FieldConfigFunc<CheckboxFieldConfig> = (
   values: FormValues
 ) => {
   return {
-    type: CHECKBOX,
-    name: "hasCoapplicant",
-    labelText: "Has Co-Applicant",
-    className: "col-12 mt-2",
-    initialValue: false,
-    validator: null,
+    Component: Checkbox,
+    config: {
+      name: "hasCoapplicant",
+      labelText: "Has Co-Applicant",
+      className: "col-12 mt-2",
+      initialValue: false,
+      validator: null,
+    }
   };
 };
 
-const buildCoapplicantValidator = (
-  inputConfig: FieldConfigObject
+const buildCoapplicantValidator = <FCP extends FieldConfigProps>(
+  inputConfig: FieldConfigObject<FCP>
 ): ((values: FormValues) => yup.AnySchema | null) => {
-  return (values): yup.AnySchema | null => {
+  return (values) => {
     return values.hasCoapplicant
-      ? (inputConfig.validator as yup.AnySchema)
+      ? (inputConfig.config.validator as yup.AnySchema)
       : null; // allow anything
   };
 };
 
-export const coapplicantFirstName: InputFieldConfig = {
+export const coapplicantFirstName: FieldConfigObject<InputFieldConfig> = {
   ...firstName,
-  name: "coapplicantFirstName",
-  validator: buildCoapplicantValidator(firstName),
+  config: {
+    ...firstName.config,
+    name: "coapplicantFirstName",
+    validator: buildCoapplicantValidator(firstName),
+  },
 };
 
-export const coapplicantMiddleInitial: InputFieldConfig = {
+export const coapplicantMiddleInitial: FieldConfigObject<InputFieldConfig> = {
   ...middleInitial,
-  name: "coapplicantMiddleInitial",
-  validator: buildCoapplicantValidator(middleInitial),
+  config: {
+    ...middleInitial.config,
+    name: "coapplicantMiddleInitial",
+    validator: buildCoapplicantValidator(middleInitial),
+  },
 };
 
-export const coapplicantLastName: InputFieldConfig = {
+export const coapplicantLastName: FieldConfigObject<InputFieldConfig> = {
   ...lastName,
-  name: "coapplicantLastName",
-  validator: buildCoapplicantValidator(lastName),
+  config: {
+    ...lastName.config,
+    name: "coapplicantLastName",
+    validator: buildCoapplicantValidator(lastName),
+  },
 };
 
-export const coapplicantStreetAddr: InputFieldConfig = {
+export const coapplicantStreetAddr: FieldConfigObject<InputFieldConfig> = {
   ...streetAddr,
-  name: "coapplicantStreetAddr",
-  validator: buildCoapplicantValidator(streetAddr),
+  config: {
+    ...streetAddr.config,
+    name: "coapplicantStreetAddr",
+    validator: buildCoapplicantValidator(streetAddr),
+  },
 };
 
-export const coapplicantCity: InputFieldConfig = {
+export const coapplicantCity: FieldConfigObject<InputFieldConfig> = {
   ...city,
-  name: "coapplicantCity",
-  validator: buildCoapplicantValidator(city),
+  config: {
+    ...city.config,
+    name: "coapplicantCity",
+    validator: buildCoapplicantValidator(city),
+  },
 };
 
-export const coapplicantState: InputFieldConfig = {
+export const coapplicantState: FieldConfigObject<InputFieldConfig> = {
   ...state,
-  name: "coapplicantState",
-  validator: buildCoapplicantValidator(state),
+  config: {
+    ...state.config,
+    name: "coapplicantState",
+    validator: buildCoapplicantValidator(state),
+  },
 };
 
-export const coapplicantYearsAtResidence: InputFieldConfig = {
+export const coapplicantYearsAtResidence: FieldConfigObject<InputFieldConfig> = {
   ...yearsAtResidence,
-  name: "coapplicantYearsAtResidence",
-  validator: buildCoapplicantValidator(yearsAtResidence),
+  config: {
+    ...yearsAtResidence.config,
+    name: "coapplicantYearsAtResidence",
+    validator: buildCoapplicantValidator(yearsAtResidence),
+  },
 };
 
-export const hasTradeIn: ButtonToggleFieldConfig = {
-  type: BUTTON_TOGGLE,
-  name: "hasTradeIn",
-  labelText: "Has Trade In",
-  validator: yup.boolean().required("Required"),
-  initialValue: false,
-  buttonConfigs: [
-    { divClassName: "col-auto", value: false, text: "No" },
-    { divClassName: "col-auto", value: true, text: "Yes" },
-  ],
+export const hasTradeIn: FieldConfigObject<ButtonToggleFieldConfig> = {
+  Component: ButtonToggle,
+  config: {
+    name: "hasTradeIn",
+    labelText: "Has Trade In",
+    validator: yup.boolean().required("Required"),
+    initialValue: false,
+    buttonConfigs: [
+      { divClassName: "col-auto", value: false, text: "No" },
+      { divClassName: "col-auto", value: true, text: "Yes" },
+    ],
+  },
 };

@@ -2,22 +2,24 @@ import * as yup from "yup";
 
 import FormGroup from "../../components/FormGroup/FormGroup";
 import FormHelper, { FormProps } from "../../components/FormHelper/FormHelper";
-import { InputFieldConfig } from "../../components/Input/Input";
+import Input, { InputFieldConfig } from "../../components/Input/Input";
 import { FieldKit, FormValues, FormActions } from "../formUtils";
-import {FieldConfigBundle, INPUT} from "../inputConfigs";
+import {FieldConfigBundle, FieldConfigObject} from "../inputConfigs";
 import {
   vehicleGroupInputs,
   applicantGroupInputs,
   coapplicantGroupInputs,
 } from "../inputConfigs/formGroupConfigs";
 
-const customInput: InputFieldConfig = {
-  type: INPUT,
-  name: "customInput",
-  labelText: "Custom Input",
-  inputType: "text",
-  className: "col-5",
-  validator: yup.string().required("Required"),
+const customInput: FieldConfigObject<InputFieldConfig> = {
+  Component: Input,
+  config: {
+    name: "customInput",
+    labelText: "Custom Input",
+    inputType: "text",
+    className: "col-5",
+    validator: yup.string().required("Required"),
+  }
 };
 
 const applicantInputs = { ...applicantGroupInputs, customInput, };

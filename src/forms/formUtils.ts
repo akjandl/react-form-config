@@ -11,15 +11,16 @@ import * as yup from "yup";
 import {
   FieldConfigBundle,
   FieldConfigAny,
-  FieldConfigObject,
+  FieldConfigProps,
 } from "./inputConfigs";
 
 const FALSY_INITIAL_VALUE_TYPES = ["boolean"];
 
-const configObjectFromConfig = (
+const configObjectFromConfig = <FCP extends FieldConfigProps>(
   fieldConfig: FieldConfigAny
-): FieldConfigObject => {
-  return typeof fieldConfig === "function" ? fieldConfig({}) : fieldConfig;
+): FCP => {
+  const configObj = typeof fieldConfig === "function" ? fieldConfig({}) : fieldConfig;
+  return configObj.config;
 };
 
 export const initialValuesFromFieldConfigs = (
@@ -27,11 +28,11 @@ export const initialValuesFromFieldConfigs = (
 ) => {
   const inputsArray = Object.values(inputConfigs);
   return inputsArray.reduce((acc: { [key: string]: any }, inputConfig) => {
-    const inp = configObjectFromConfig(inputConfig);
-    const value = FALSY_INITIAL_VALUE_TYPES.includes(typeof inp.initialValue)
-      ? inp.initialValue
-      : inp.initialValue || "";
-    acc[inp.name] = value;
+    const config = configObjectFromConfig(inputConfig);
+    const value = FALSY_INITIAL_VALUE_TYPES.includes(typeof config.initialValue)
+      ? config.initialValue
+      : config.initialValue || "";
+    acc[config.name] = value;
     return acc;
   }, {});
 };
@@ -80,12 +81,12 @@ export const validationSchemaFromFieldConfigs = (
         .reduce(
           (
             acc: { [key: string]: yup.AnySchema },
-            configObject: FieldConfigObject
+            config: FieldConfigProps
           ) => {
-            acc[configObject.name] =
-              typeof configObject.validator === "function"
-                ? configObject.validator(formValues)
-                : configObject.validator ?? yup.mixed().optional();
+            acc[config.name] =
+              typeof config.validator === "function"
+                ? config.validator(formValues)
+                : config.validator ?? yup.mixed().optional();
             return acc;
           },
           {}

@@ -1,9 +1,7 @@
-import { FieldConfigObject, CHECKBOX } from "../../forms/inputConfigs";
-import { FormElementProps } from "../FormElement/FormElement";
+import {  FieldConfigProps, FormComponentProps } from "../../forms/inputConfigs";
 import InputLabel from "../InputLabel/InputLabel";
 
-export interface CheckboxFieldConfig extends FieldConfigObject {
-  type: typeof CHECKBOX;
+export interface CheckboxFieldConfig extends FieldConfigProps {
   labelText: string;
   other?: object;
   className?: string;
@@ -12,7 +10,7 @@ export interface CheckboxFieldConfig extends FieldConfigObject {
 /**
  * General component which renders a checkbox
  */
-const Checkbox = (props: FormElementProps<CheckboxFieldConfig>) => {
+const Checkbox = (props: FormComponentProps<CheckboxFieldConfig>) => {
   const { fieldConfig, fieldKit, className } = props;
   const elemName = fieldConfig.name;
 
