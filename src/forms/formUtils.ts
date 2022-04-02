@@ -8,7 +8,7 @@ import {
 } from "formik";
 import * as yup from "yup";
 
-import { FieldConfigBundle, FieldConfigAny, FieldConfig } from "./inputConfigs";
+import { FieldConfigBundle, FieldConfigAny, FieldConfig } from "./fieldConfigs";
 
 const configPropsFromFieldConfigAny = <FCP extends FieldConfig>(
   fieldConfig: FieldConfigAny

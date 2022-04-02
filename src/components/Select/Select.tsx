@@ -1,5 +1,5 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FormComponentProps, FieldConfig } from "../../forms/inputConfigs";
+import { FormComponentProps, FieldConfig } from "../../forms/fieldConfigs";
 
 export interface SelectFieldConfig extends FieldConfig {
   labelText: string;

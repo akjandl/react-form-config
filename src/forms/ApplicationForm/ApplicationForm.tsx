@@ -4,12 +4,12 @@ import FormGroup from "../../components/FormGroup/FormGroup";
 import FormHelper from "../../components/FormHelper/FormHelper";
 import Input, { InputFieldConfig } from "../../components/Input/Input";
 import { FieldKit, FormKit, FormValues, FormActions } from "../formUtils";
-import {FieldConfigBundle, FieldConfigObject} from "../inputConfigs";
+import {FieldConfigBundle, FieldConfigObject} from "../fieldConfigs";
 import {
   vehicleGroupInputs,
   applicantGroupInputs,
   coapplicantGroupInputs,
-} from "../inputConfigs/formGroupConfigs";
+} from "../fieldConfigs/formGroupConfigs";
 
 const customInput: FieldConfigObject<InputFieldConfig> = {
   Component: Input,

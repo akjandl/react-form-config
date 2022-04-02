@@ -1,7 +1,7 @@
 import { FieldKit } from "../../forms/formUtils";
 import {
   FieldConfigAny,
-} from "../../forms/inputConfigs";
+} from "../../forms/fieldConfigs";
 
 interface FormElementProps {
   fieldConfig: FieldConfigAny;
