@@ -1,7 +1,7 @@
-import {  FieldConfigProps, FormComponentProps } from "../../forms/inputConfigs";
+import {  FieldConfig, FormComponentProps } from "../../forms/inputConfigs";
 import InputLabel from "../InputLabel/InputLabel";
 
-export interface CheckboxFieldConfig extends FieldConfigProps {
+export interface CheckboxFieldConfig extends FieldConfig {
   labelText: string;
   other?: object;
   className?: string;

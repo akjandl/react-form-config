@@ -1,7 +1,7 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FormComponentProps, FieldConfigProps } from "../../forms/inputConfigs";
+import { FormComponentProps, FieldConfig } from "../../forms/inputConfigs";
 
-export interface InputFieldConfig extends FieldConfigProps {
+export interface InputFieldConfig extends FieldConfig {
   labelText: string;
   className: string;
   inputType: "text" | "number";

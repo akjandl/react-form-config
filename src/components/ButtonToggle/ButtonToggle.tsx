@@ -1,7 +1,7 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FormComponentProps, FieldConfigProps } from "../../forms/inputConfigs";
+import { FormComponentProps, FieldConfig } from "../../forms/inputConfigs";
 
-export interface ButtonToggleFieldConfig extends FieldConfigProps {
+export interface ButtonToggleFieldConfig extends FieldConfig {
   labelText: string;
   buttonConfigs: ButtonConfig[];
   className?: string;

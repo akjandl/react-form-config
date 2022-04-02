@@ -1,17 +1,14 @@
-import { Formik, FormikHandlers } from "formik";
+import { Formik } from "formik";
 
 import {
   initialValuesFromFieldConfigs,
   validationSchemaFromFieldConfigs,
   mapFormikPropsToFieldKit,
+  mapFormikPropsToFormKit,
   FormValues,
   FormActions,
 } from "../../forms/formUtils";
 import { FieldConfigBundle } from "../../forms/inputConfigs";
-
-export interface FormProps {
-  handleSubmit: FormikHandlers["handleSubmit"];
-}
 
 interface FormHelperProps {
   fieldConfigs: FieldConfigBundle;
@@ -43,8 +40,8 @@ const FormHelper = (props: FormHelperProps) => {
       {(formikProps) => {
         return typeof props.children === "function"
           ? props.children({
-              fieldProps: mapFormikPropsToFieldKit(formikProps),
-              formProps: { handleSubmit: formikProps.handleSubmit },
+              fieldKit: mapFormikPropsToFieldKit(formikProps),
+              formKit: mapFormikPropsToFormKit(formikProps),
             })
           : props.children;
       }}

@@ -3,7 +3,7 @@ import {
   FieldConfigAny,
 } from "../../forms/inputConfigs";
 
-export interface FormElementProps {
+interface FormElementProps {
   fieldConfig: FieldConfigAny;
   fieldKit: FieldKit;
   className?: string;

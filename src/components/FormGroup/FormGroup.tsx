@@ -7,7 +7,7 @@ import { FieldConfigBundle } from "../../forms/inputConfigs";
 
 interface FormGroupProps {
   fieldConfigs: FieldConfigBundle;
-  fieldProps: FieldKit;
+  fieldKit: FieldKit;
 }
 
 const FormGroup = (props: FormGroupProps) => {
@@ -16,7 +16,7 @@ const FormGroup = (props: FormGroupProps) => {
     <FormElement
       key={keyFromFieldConfig(inputConfig)}
       fieldConfig={inputConfig}
-      fieldKit={props.fieldProps}
+      fieldKit={props.fieldKit}
     />
   ));
 
