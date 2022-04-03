@@ -24,7 +24,7 @@ const configFromFieldInstructionAny = <FC extends FieldConfig>(
   return fieldInstruction.config;
 };
 
-export const initialValuesFromFieldConfigs = (
+export const initialValuesFromFieldInstructionBundle = (
   inputConfigs: FieldInstructionBundle
 ) => {
   const allowFalsyInitialValueTypes = ["boolean", "number"];

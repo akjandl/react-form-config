@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 
 import {
-  initialValuesFromFieldConfigs,
+  initialValuesFromFieldInstructionBundle,
   validationSchemaFromFieldInstructionBundle,
   mapFormikPropsToFieldKit,
   mapFormikPropsToFormKit,
@@ -18,9 +18,9 @@ interface FormHelperProps {
   enableReinitialize?: boolean;
 }
 
-const FormHelper = (props: FormHelperProps) => {
+const FormBuilder = (props: FormHelperProps) => {
   const defaultInitialValues = {
-    ...initialValuesFromFieldConfigs(props.fieldInstructionBundle),
+    ...initialValuesFromFieldInstructionBundle(props.fieldInstructionBundle),
   };
   const initialValues = {
     ...defaultInitialValues,
@@ -51,4 +51,4 @@ const FormHelper = (props: FormHelperProps) => {
   );
 };
 
-export default FormHelper;
+export default FormBuilder;

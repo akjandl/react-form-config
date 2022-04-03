@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 import FormGroup from "../../components/FormGroup/FormGroup";
-import FormHelper from "../../components/FormHelper/FormHelper";
+import FormBuilder from "../../components/FormBuilder/FormBuilder";
 import Input, { InputConfig } from "../../components/Input/Input";
 import { FieldKit, FormKit, FormValues, FormActions } from "../formUtils";
 import {FieldInstructionBundle, FieldInstruction} from "../fieldInstructions";
@@ -44,7 +44,7 @@ interface ApplicationFormProps {
  */
 const ApplicationForm = (props: ApplicationFormProps) => {
   return (
-    <FormHelper
+    <FormBuilder
       fieldInstructionBundle={fieldInstructionBundle}
       onSubmit={props.onSubmit}
       overrideDefaultInitialValues={{}}
@@ -91,7 +91,7 @@ const ApplicationForm = (props: ApplicationFormProps) => {
           </form>
         );
       }}
-    </FormHelper>
+    </FormBuilder>
   );
 };
 
