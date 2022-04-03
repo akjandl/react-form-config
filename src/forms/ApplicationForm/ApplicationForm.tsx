@@ -26,7 +26,7 @@ const applicantInputs = { ...applicantGroupInputs, customInput };
 const vehicleInputs = { ...vehicleGroupInputs };
 const coapplicantInputs = { ...coapplicantGroupInputs };
 
-const formFieldConfigs: FieldInstructionBundle = {
+const fieldInstructionBundle: FieldInstructionBundle = {
   ...vehicleInputs,
   ...applicantInputs,
   ...coapplicantInputs,
@@ -37,7 +37,7 @@ interface ApplicationFormProps {
 }
 
 /**
- * A form composed from input configs.
+ * A form composed from field instructions.
  * A submit handler function is passed as a prop in order to separate
  * form rendering/validation logic from what is done with the form values after
  * they are submitted.
@@ -45,7 +45,7 @@ interface ApplicationFormProps {
 const ApplicationForm = (props: ApplicationFormProps) => {
   return (
     <FormHelper
-      fieldInstructionBundle={formFieldConfigs}
+      fieldInstructionBundle={fieldInstructionBundle}
       onSubmit={props.onSubmit}
       overrideDefaultInitialValues={{}}
     >
