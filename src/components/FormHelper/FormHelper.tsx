@@ -2,16 +2,16 @@ import { Formik } from "formik";
 
 import {
   initialValuesFromFieldConfigs,
-  validationSchemaFromFieldConfigs,
+  validationSchemaFromFieldInstructionBundle,
   mapFormikPropsToFieldKit,
   mapFormikPropsToFormKit,
   FormValues,
   FormActions,
 } from "../../forms/formUtils";
-import { FieldConfigBundle } from "../../forms/fieldConfigs";
+import { FieldInstructionBundle } from "../../forms/fieldConfigs";
 
 interface FormHelperProps {
-  fieldConfigs: FieldConfigBundle;
+  fieldInstructionBundle: FieldInstructionBundle;
   onSubmit: (values: FormValues, actions: FormActions) => void | Promise<any>;
   children: React.ReactNode;
   overrideDefaultInitialValues?: FormValues;
@@ -20,14 +20,16 @@ interface FormHelperProps {
 
 const FormHelper = (props: FormHelperProps) => {
   const defaultInitialValues = {
-    ...initialValuesFromFieldConfigs(props.fieldConfigs),
+    ...initialValuesFromFieldConfigs(props.fieldInstructionBundle),
   };
   const initialValues = {
     ...defaultInitialValues,
     ...props.overrideDefaultInitialValues,
   };
 
-  const validationSchema = validationSchemaFromFieldConfigs(props.fieldConfigs);
+  const validationSchema = validationSchemaFromFieldInstructionBundle(
+    props.fieldInstructionBundle
+  );
   const enableReinitialize = props.enableReinitialize || false;
 
   return (

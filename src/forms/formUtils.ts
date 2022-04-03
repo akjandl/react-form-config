@@ -8,24 +8,30 @@ import {
 } from "formik";
 import * as yup from "yup";
 
-import { FieldConfigBundle, FieldConfigAny, FieldConfig } from "./fieldConfigs";
+import {
+  FieldInstructionBundle,
+  FieldInstructionAny,
+  FieldConfig,
+} from "./fieldConfigs";
 
-const configFromFieldConfigAny = <FCP extends FieldConfig>(
-  fieldConfig: FieldConfigAny
-): FCP => {
-  const configObj =
-    typeof fieldConfig === "function" ? fieldConfig() : fieldConfig;
-  return configObj.config;
+const configFromFieldInstructionAny = <FC extends FieldConfig>(
+  fieldInstructionAny: FieldInstructionAny
+): FC => {
+  const fieldInstruction =
+    typeof fieldInstructionAny === "function"
+      ? fieldInstructionAny()
+      : fieldInstructionAny;
+  return fieldInstruction.config;
 };
 
 export const initialValuesFromFieldConfigs = (
-  inputConfigs: FieldConfigBundle
+  inputConfigs: FieldInstructionBundle
 ) => {
   const allowFalsyInitialValueTypes = ["boolean", "number"];
 
   const inputsArray = Object.values(inputConfigs);
   return inputsArray.reduce((acc: { [key: string]: any }, inputConfig) => {
-    const config = configFromFieldConfigAny(inputConfig);
+    const config = configFromFieldInstructionAny(inputConfig);
     const value = allowFalsyInitialValueTypes.includes(
       typeof config.initialValue
     )
@@ -77,18 +83,20 @@ export const mapFormikPropsToFormKit: (
   };
 };
 
-export const keyFromFieldConfig = (inputConfig: FieldConfigAny) => {
-  const config = configFromFieldConfigAny(inputConfig);
+export const keyFromFieldConfig = (inputConfig: FieldInstructionAny) => {
+  const config = configFromFieldInstructionAny(inputConfig);
   return config.id || config.name;
 };
 
-export const validationSchemaFromFieldConfigs = (
-  fieldConfigs: FieldConfigBundle
+export const validationSchemaFromFieldInstructionBundle = (
+  fieldInstructionBundle: FieldInstructionBundle
 ) => {
   return yup.lazy((formValues: FormValues) => {
     return yup.object().shape(
-      Object.values(fieldConfigs)
-        .map((fieldConfig) => configFromFieldConfigAny(fieldConfig))
+      Object.values(fieldInstructionBundle)
+        .map((fieldInstructionAny) =>
+          configFromFieldInstructionAny(fieldInstructionAny)
+        )
         .reduce(
           (acc: { [key: string]: yup.AnySchema }, config: FieldConfig) => {
             acc[config.name] =

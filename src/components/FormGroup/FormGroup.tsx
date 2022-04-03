@@ -3,19 +3,19 @@ import React from "react";
 import FormElement from "../FormElement/FormElement";
 import { keyFromFieldConfig } from "../../forms/formUtils";
 import { FieldKit } from "../../forms/formUtils";
-import { FieldConfigBundle } from "../../forms/fieldConfigs";
+import { FieldInstructionBundle } from "../../forms/fieldConfigs";
 
 interface FormGroupProps {
-  fieldConfigs: FieldConfigBundle;
+  fieldInstructionBundle: FieldInstructionBundle;
   fieldKit: FieldKit;
 }
 
 const FormGroup = (props: FormGroupProps) => {
-  const fieldConfigsArray = Object.values(props.fieldConfigs);
-  const elements = fieldConfigsArray.map((inputConfig) => (
+  const fieldInstructionArray = Object.values(props.fieldInstructionBundle);
+  const elements = fieldInstructionArray.map((inputConfig) => (
     <FormElement
       key={keyFromFieldConfig(inputConfig)}
-      fieldConfig={inputConfig}
+      fieldInstructionAny={inputConfig}
       fieldKit={props.fieldKit}
     />
   ));

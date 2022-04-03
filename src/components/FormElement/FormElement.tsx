@@ -1,27 +1,27 @@
 import { FieldKit } from "../../forms/formUtils";
 import {
-  FieldConfigAny,
+  FieldInstructionAny,
 } from "../../forms/fieldConfigs";
 
 interface FormElementProps {
-  fieldConfig: FieldConfigAny;
+  fieldInstructionAny: FieldInstructionAny;
   fieldKit: FieldKit;
   className?: string;
 }
 
 const FormElement: (props: FormElementProps) => JSX.Element = (props) => {
-  const { fieldConfig, fieldKit, className } = props;
+  const { fieldInstructionAny, fieldKit, className } = props;
 
-  const fieldConfigObject =
-    typeof fieldConfig === "function"
-      ? fieldConfig(fieldKit.values, fieldKit)
-      : fieldConfig;
+  const fieldInstruction =
+    typeof fieldInstructionAny === "function"
+      ? fieldInstructionAny(fieldKit.values, fieldKit)
+      : fieldInstructionAny;
 
-  const Component = fieldConfigObject.Component;
+  const Component = fieldInstruction.Component;
 
   return (
     <Component
-      fieldConfig={fieldConfigObject.config}
+      fieldConfig={fieldInstruction.config}
       fieldKit={fieldKit}
       className={className}
     />

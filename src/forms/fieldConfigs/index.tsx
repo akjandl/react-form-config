@@ -10,31 +10,32 @@ import Input, { InputFieldConfig } from "../../components/Input/Input";
 import Select, { SelectFieldConfig } from "../../components/Select/Select";
 import { FormValues, FieldKit } from "../formUtils";
 
-export interface FieldConfigObject<FC extends FieldConfig> {
-  Component: (props: FieldProps<FC>) => JSX.Element;
-  config: FC;
-}
-
 export interface FieldProps<FC extends FieldConfig> {
   fieldConfig: FC;
   fieldKit: FieldKit;
   className?: string;
 }
 
+export interface FieldInstruction<FC extends FieldConfig> {
+  Component: (props: FieldProps<FC>) => JSX.Element;
+  config: FC;
+}
 /**
  * Parameters will be passed to the func when the field is being rendered.
  * Parameters are only optional because the config creation func will be called
  * during form setup without parameters.
  */
-export type FieldConfigFunc<FC extends FieldConfig> = (
+export type FieldInstructionCreator<FC extends FieldConfig> = (
   formValues?: FormValues,
   fieldKit?: FieldKit
-) => FieldConfigObject<FC>;
+) => FieldInstruction<FC>;
 
-export type FieldConfigAny = FieldConfigObject<any> | FieldConfigFunc<any>;
+export type FieldInstructionAny =
+  | FieldInstruction<any>
+  | FieldInstructionCreator<any>;
 
-export interface FieldConfigBundle {
-  [key: string]: FieldConfigAny;
+export interface FieldInstructionBundle {
+  [key: string]: FieldInstructionAny;
 }
 
 export interface FieldConfig {
@@ -55,16 +56,16 @@ type Validator =
  * on a joint application. Prevents validation of coapplicant fields when
  * the application is not joint.
  */
-const buildCoapplicantValidator = <FCP extends FieldConfig>(
-  fieldConfigObj: FieldConfigObject<FCP>
+const buildCoapplicantValidator = <FC extends FieldConfig>(
+  fieldInstruction: FieldInstruction<FC>
 ): ((values: FormValues) => yup.AnySchema | null) => {
   return (values) => {
     if (!values.hasCoapplicant) {
       return null; // no validation when no co-applicant
     }
-    return typeof fieldConfigObj.config.validator === "function"
-      ? fieldConfigObj.config.validator(values)
-      : fieldConfigObj.config.validator;
+    return typeof fieldInstruction.config.validator === "function"
+      ? fieldInstruction.config.validator(values)
+      : fieldInstruction.config.validator;
   };
 };
 
@@ -72,7 +73,7 @@ const buildCoapplicantValidator = <FCP extends FieldConfig>(
 // * Configuration definitions for form inputs.
 // ********************************************************************
 
-export const firstName: FieldConfigObject<InputFieldConfig> = {
+export const firstName: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "firstName",
@@ -83,7 +84,7 @@ export const firstName: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const middleInitial: FieldConfigObject<InputFieldConfig> = {
+export const middleInitial: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "middleInitial",
@@ -94,7 +95,7 @@ export const middleInitial: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const lastName: FieldConfigObject<InputFieldConfig> = {
+export const lastName: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "lastName",
@@ -105,7 +106,7 @@ export const lastName: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const streetAddr: FieldConfigObject<InputFieldConfig> = {
+export const streetAddr: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "streetAddr",
@@ -116,7 +117,7 @@ export const streetAddr: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const city: FieldConfigObject<InputFieldConfig> = {
+export const city: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "city",
@@ -127,7 +128,7 @@ export const city: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const state: FieldConfigObject<InputFieldConfig> = {
+export const state: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "state",
@@ -142,7 +143,7 @@ export const state: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const yearsAtResidence: FieldConfigObject<InputFieldConfig> = {
+export const yearsAtResidence: FieldInstruction<InputFieldConfig> = {
   Component: Input,
   config: {
     name: "yearsAtResidence",
@@ -163,7 +164,7 @@ export const yearsAtResidence: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const vehicleMake: FieldConfigObject<SelectFieldConfig> = {
+export const vehicleMake: FieldInstruction<SelectFieldConfig> = {
   Component: Select,
   config: {
     name: "vehicleMake",
@@ -179,7 +180,7 @@ export const vehicleMake: FieldConfigObject<SelectFieldConfig> = {
   },
 };
 
-export const vehicleModel: FieldConfigObject<SelectFieldConfig> = {
+export const vehicleModel: FieldInstruction<SelectFieldConfig> = {
   Component: Select,
   config: {
     name: "vehicleModel",
@@ -194,7 +195,7 @@ export const vehicleModel: FieldConfigObject<SelectFieldConfig> = {
     validator: yup.string().required("Required"),
   },
 };
-export const coapplicantFirstName: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantFirstName: FieldInstruction<InputFieldConfig> = {
   ...firstName,
   config: {
     ...firstName.config,
@@ -203,7 +204,7 @@ export const coapplicantFirstName: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantMiddleInitial: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantMiddleInitial: FieldInstruction<InputFieldConfig> = {
   ...middleInitial,
   config: {
     ...middleInitial.config,
@@ -212,7 +213,7 @@ export const coapplicantMiddleInitial: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantLastName: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantLastName: FieldInstruction<InputFieldConfig> = {
   ...lastName,
   config: {
     ...lastName.config,
@@ -221,7 +222,7 @@ export const coapplicantLastName: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantStreetAddr: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantStreetAddr: FieldInstruction<InputFieldConfig> = {
   ...streetAddr,
   config: {
     ...streetAddr.config,
@@ -230,7 +231,7 @@ export const coapplicantStreetAddr: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantCity: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantCity: FieldInstruction<InputFieldConfig> = {
   ...city,
   config: {
     ...city.config,
@@ -239,7 +240,7 @@ export const coapplicantCity: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantState: FieldConfigObject<InputFieldConfig> = {
+export const coapplicantState: FieldInstruction<InputFieldConfig> = {
   ...state,
   config: {
     ...state.config,
@@ -248,17 +249,16 @@ export const coapplicantState: FieldConfigObject<InputFieldConfig> = {
   },
 };
 
-export const coapplicantYearsAtResidence: FieldConfigObject<InputFieldConfig> =
-  {
-    ...yearsAtResidence,
-    config: {
-      ...yearsAtResidence.config,
-      name: "coapplicantYearsAtResidence",
-      validator: buildCoapplicantValidator(yearsAtResidence),
-    },
-  };
+export const coapplicantYearsAtResidence: FieldInstruction<InputFieldConfig> = {
+  ...yearsAtResidence,
+  config: {
+    ...yearsAtResidence.config,
+    name: "coapplicantYearsAtResidence",
+    validator: buildCoapplicantValidator(yearsAtResidence),
+  },
+};
 
-export const hasTradeIn: FieldConfigObject<ButtonToggleFieldConfig> = {
+export const hasTradeIn: FieldInstruction<ButtonToggleFieldConfig> = {
   Component: ButtonToggle,
   config: {
     name: "hasTradeIn",
@@ -276,7 +276,7 @@ export const hasTradeIn: FieldConfigObject<ButtonToggleFieldConfig> = {
  * This hasCoapplicant checkbox is contrived and overly complex on purpose.
  * This is meant to show how flexible field generation can be.
  */
-export const hasCoapplicant: FieldConfigFunc<CheckboxFieldConfig> = (
+export const hasCoapplicant: FieldInstructionCreator<CheckboxFieldConfig> = (
   formValues,
   fieldKit
 ) => {
