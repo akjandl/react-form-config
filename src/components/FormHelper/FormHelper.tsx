@@ -8,7 +8,7 @@ import {
   FormValues,
   FormActions,
 } from "../../forms/formUtils";
-import { FieldInstructionBundle } from "../../forms/fieldConfigs";
+import { FieldInstructionBundle } from "../../forms/fieldInstructions";
 
 interface FormHelperProps {
   fieldInstructionBundle: FieldInstructionBundle;

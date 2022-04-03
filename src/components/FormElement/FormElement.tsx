@@ -1,7 +1,7 @@
 import { FieldKit } from "../../forms/formUtils";
 import {
   FieldInstructionAny,
-} from "../../forms/fieldConfigs";
+} from "../../forms/fieldInstructions";
 
 interface FormElementProps {
   fieldInstructionAny: FieldInstructionAny;

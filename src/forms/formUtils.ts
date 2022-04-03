@@ -12,7 +12,7 @@ import {
   FieldInstructionBundle,
   FieldInstructionAny,
   FieldConfig,
-} from "./fieldConfigs";
+} from "./fieldInstructions";
 
 const configFromFieldInstructionAny = <FC extends FieldConfig>(
   fieldInstructionAny: FieldInstructionAny

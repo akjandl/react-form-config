@@ -3,7 +3,7 @@ import React from "react";
 import FormElement from "../FormElement/FormElement";
 import { keyFromFieldConfig } from "../../forms/formUtils";
 import { FieldKit } from "../../forms/formUtils";
-import { FieldInstructionBundle } from "../../forms/fieldConfigs";
+import { FieldInstructionBundle } from "../../forms/fieldInstructions";
 
 interface FormGroupProps {
   fieldInstructionBundle: FieldInstructionBundle;
