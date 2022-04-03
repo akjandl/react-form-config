@@ -1,7 +1,7 @@
 import InputLabel from "../InputLabel/InputLabel";
 import { FieldProps, FieldConfig } from "../../forms/fieldConfigs";
 
-export interface InputFieldConfig extends FieldConfig {
+export interface InputConfig extends FieldConfig {
   labelText: string | JSX.Element;
   className: string;
   inputType: "text" | "number";
@@ -13,7 +13,7 @@ export interface InputFieldConfig extends FieldConfig {
  * General component which can render either a text or number input, with label,
  * depending on the configuration provided.
  */
-const Input = (props: FieldProps<InputFieldConfig>) => {
+const Input = (props: FieldProps<InputConfig>) => {
   const { className, fieldConfig, fieldKit } = props;
 
   const elemName = fieldConfig.name;

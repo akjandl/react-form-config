@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 import FormGroup from "../../components/FormGroup/FormGroup";
 import FormHelper from "../../components/FormHelper/FormHelper";
-import Input, { InputFieldConfig } from "../../components/Input/Input";
+import Input, { InputConfig } from "../../components/Input/Input";
 import { FieldKit, FormKit, FormValues, FormActions } from "../formUtils";
 import {FieldInstructionBundle, FieldInstruction} from "../fieldConfigs";
 import {
@@ -11,7 +11,7 @@ import {
   coapplicantGroupInputs,
 } from "../fieldConfigs/formGroupConfigs";
 
-const customInput: FieldInstruction<InputFieldConfig> = {
+const customInput: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
     name: "customInput",

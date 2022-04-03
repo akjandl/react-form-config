@@ -1,7 +1,7 @@
 import InputLabel from "../InputLabel/InputLabel";
 import { FieldProps, FieldConfig } from "../../forms/fieldConfigs";
 
-export interface ButtonToggleFieldConfig extends FieldConfig {
+export interface ButtonToggleConfig extends FieldConfig {
   labelText: string;
   buttonConfigs: ButtonConfig[];
   className?: string;
@@ -15,7 +15,7 @@ interface ButtonConfig {
 }
 
 const ButtonToggle: (
-  props: FieldProps<ButtonToggleFieldConfig>
+  props: FieldProps<ButtonToggleConfig>
 ) => JSX.Element = (props) => {
   const { fieldConfig, fieldKit, className } = props;
 
