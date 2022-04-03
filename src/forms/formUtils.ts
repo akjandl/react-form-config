@@ -10,23 +10,23 @@ import * as yup from "yup";
 
 import { FieldConfigBundle, FieldConfigAny, FieldConfig } from "./fieldConfigs";
 
-const configPropsFromFieldConfigAny = <FCP extends FieldConfig>(
+const configFromFieldConfigAny = <FCP extends FieldConfig>(
   fieldConfig: FieldConfigAny
 ): FCP => {
   const configObj =
-    typeof fieldConfig === "function" ? fieldConfig({}) : fieldConfig;
+    typeof fieldConfig === "function" ? fieldConfig() : fieldConfig;
   return configObj.config;
 };
-
-const ALLOW_FALSY_INITIAL_VALUE_TYPES = ["boolean", "number"];
 
 export const initialValuesFromFieldConfigs = (
   inputConfigs: FieldConfigBundle
 ) => {
+  const allowFalsyInitialValueTypes = ["boolean", "number"];
+
   const inputsArray = Object.values(inputConfigs);
   return inputsArray.reduce((acc: { [key: string]: any }, inputConfig) => {
-    const config = configPropsFromFieldConfigAny(inputConfig);
-    const value = ALLOW_FALSY_INITIAL_VALUE_TYPES.includes(
+    const config = configFromFieldConfigAny(inputConfig);
+    const value = allowFalsyInitialValueTypes.includes(
       typeof config.initialValue
     )
       ? config.initialValue
@@ -78,8 +78,8 @@ export const mapFormikPropsToFormKit: (
 };
 
 export const keyFromFieldConfig = (inputConfig: FieldConfigAny) => {
-  const cfg = configPropsFromFieldConfigAny(inputConfig);
-  return cfg.id || cfg.name;
+  const config = configFromFieldConfigAny(inputConfig);
+  return config.id || config.name;
 };
 
 export const validationSchemaFromFieldConfigs = (
@@ -88,7 +88,7 @@ export const validationSchemaFromFieldConfigs = (
   return yup.lazy((formValues: FormValues) => {
     return yup.object().shape(
       Object.values(fieldConfigs)
-        .map((fieldConfig) => configPropsFromFieldConfigAny(fieldConfig))
+        .map((fieldConfig) => configFromFieldConfigAny(fieldConfig))
         .reduce(
           (acc: { [key: string]: yup.AnySchema }, config: FieldConfig) => {
             acc[config.name] =

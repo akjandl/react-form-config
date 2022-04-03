@@ -1,8 +1,8 @@
-import {  FieldConfig, FormComponentProps } from "../../forms/fieldConfigs";
+import {  FieldConfig, FieldProps } from "../../forms/fieldConfigs";
 import InputLabel from "../InputLabel/InputLabel";
 
 export interface CheckboxFieldConfig extends FieldConfig {
-  labelText: string;
+  labelText: string | JSX.Element;
   other?: object;
   className?: string;
 }
@@ -10,7 +10,7 @@ export interface CheckboxFieldConfig extends FieldConfig {
 /**
  * General component which renders a checkbox
  */
-const Checkbox = (props: FormComponentProps<CheckboxFieldConfig>) => {
+const Checkbox = (props: FieldProps<CheckboxFieldConfig>) => {
   const { fieldConfig, fieldKit, className } = props;
   const elemName = fieldConfig.name;
 

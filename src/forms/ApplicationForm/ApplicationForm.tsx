@@ -22,7 +22,7 @@ const customInput: FieldConfigObject<InputFieldConfig> = {
   }
 };
 
-const applicantInputs = { ...applicantGroupInputs, customInput, };
+const applicantInputs = { ...applicantGroupInputs, customInput };
 const vehicleInputs = { ...vehicleGroupInputs };
 const coapplicantInputs = { ...coapplicantGroupInputs };
 

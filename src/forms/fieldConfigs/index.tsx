@@ -11,18 +11,24 @@ import Select, { SelectFieldConfig } from "../../components/Select/Select";
 import { FormValues, FieldKit } from "../formUtils";
 
 export interface FieldConfigObject<FC extends FieldConfig> {
-  Component: (props: FormComponentProps<FC>) => JSX.Element;
+  Component: (props: FieldProps<FC>) => JSX.Element;
   config: FC;
 }
 
-export interface FormComponentProps<FC extends FieldConfig> {
+export interface FieldProps<FC extends FieldConfig> {
   fieldConfig: FC;
   fieldKit: FieldKit;
   className?: string;
 }
 
+/**
+ * Parameters will be passed to the func when the field is being rendered.
+ * Parameters are only optional because the config creation func will be called
+ * during form setup without parameters.
+ */
 export type FieldConfigFunc<FC extends FieldConfig> = (
-  values: FormValues
+  formValues?: FormValues,
+  fieldKit?: FieldKit
 ) => FieldConfigObject<FC>;
 
 export type FieldConfigAny = FieldConfigObject<any> | FieldConfigFunc<any>;
@@ -34,17 +40,37 @@ export interface FieldConfigBundle {
 export interface FieldConfig {
   type?: string;
   name: string;
-  validator:
-    | yup.AnySchema
-    | null
-    | ((values: FormValues) => yup.AnySchema | null);
+  validator: Validator;
   initialValue?: any;
   id?: string;
 }
 
+type Validator =
+  | yup.AnySchema
+  | null
+  | ((values: FormValues) => yup.AnySchema | null);
+
 /**
- * Configuration definitions for form inputs.
+ * Utility function for copying the validator of an applicant field, for the co-applicant,
+ * on a joint application. Prevents validation of coapplicant fields when
+ * the application is not joint.
  */
+const buildCoapplicantValidator = <FCP extends FieldConfig>(
+  fieldConfigObj: FieldConfigObject<FCP>
+): ((values: FormValues) => yup.AnySchema | null) => {
+  return (values) => {
+    if (!values.hasCoapplicant) {
+      return null; // no validation when no co-applicant
+    }
+    return typeof fieldConfigObj.config.validator === "function"
+      ? fieldConfigObj.config.validator(values)
+      : fieldConfigObj.config.validator;
+  };
+};
+
+// ********************************************************************
+// * Configuration definitions for form inputs.
+// ********************************************************************
 
 export const firstName: FieldConfigObject<InputFieldConfig> = {
   Component: Input,
@@ -168,32 +194,6 @@ export const vehicleModel: FieldConfigObject<SelectFieldConfig> = {
     validator: yup.string().required("Required"),
   },
 };
-
-export const hasCoapplicant: FieldConfigFunc<CheckboxFieldConfig> = (
-  values: FormValues
-) => {
-  return {
-    Component: Checkbox,
-    config: {
-      name: "hasCoapplicant",
-      labelText: "Has Co-Applicant",
-      className: "col-12 mt-2",
-      initialValue: false,
-      validator: null,
-    },
-  };
-};
-
-const buildCoapplicantValidator = <FCP extends FieldConfig>(
-  inputConfig: FieldConfigObject<FCP>
-): ((values: FormValues) => yup.AnySchema | null) => {
-  return (values) => {
-    return values.hasCoapplicant
-      ? (inputConfig.config.validator as yup.AnySchema)
-      : null; // allow anything
-  };
-};
-
 export const coapplicantFirstName: FieldConfigObject<InputFieldConfig> = {
   ...firstName,
   config: {
@@ -270,4 +270,49 @@ export const hasTradeIn: FieldConfigObject<ButtonToggleFieldConfig> = {
       { divClassName: "col-auto", value: true, text: "Yes" },
     ],
   },
+};
+
+/**
+ * This hasCoapplicant checkbox is contrived and overly complex on purpose.
+ * This is meant to show how flexible field generation can be.
+ */
+export const hasCoapplicant: FieldConfigFunc<CheckboxFieldConfig> = (
+  formValues,
+  fieldKit
+) => {
+  const label = formValues?.hasCoapplicant
+    ? "Remove Co-Applicant"
+    : "Add Co-Applicant";
+
+  // Adding this "scolding" message really should be accomplished
+  // through validation (or not at all 😉) but the Checkbox component
+  // does not allow for a validation message.
+  //
+  // Doing it this way is meant to demonstrate that aspects of the field
+  // config can be manipulated by any data within the fieldKit.
+  let scolding: JSX.Element | string = "";
+  if (
+    fieldKit?.errors.coapplicantFirstName &&
+    fieldKit?.touched.coapplicantFirstName
+  ) {
+    scolding = (
+      <i style={{ color: "red" }}> (do you really have a Co-Applicant...?)</i>
+    );
+  }
+
+  return {
+    Component: Checkbox,
+    config: {
+      name: "hasCoapplicant",
+      labelText: (
+        <span>
+          {label}
+          {scolding}
+        </span>
+      ),
+      className: "col-12 mt-2",
+      initialValue: false,
+      validator: null,
+    },
+  };
 };

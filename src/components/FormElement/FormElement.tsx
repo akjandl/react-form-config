@@ -14,7 +14,7 @@ const FormElement: (props: FormElementProps) => JSX.Element = (props) => {
 
   const fieldConfigObject =
     typeof fieldConfig === "function"
-      ? fieldConfig(fieldKit.values)
+      ? fieldConfig(fieldKit.values, fieldKit)
       : fieldConfig;
 
   const Component = fieldConfigObject.Component;

@@ -1,10 +1,11 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FormComponentProps, FieldConfig } from "../../forms/fieldConfigs";
+import { FieldProps, FieldConfig } from "../../forms/fieldConfigs";
 
 export interface InputFieldConfig extends FieldConfig {
-  labelText: string;
+  labelText: string | JSX.Element;
   className: string;
   inputType: "text" | "number";
+  placeholder?: string;
   other?: object;
 }
 
@@ -12,7 +13,7 @@ export interface InputFieldConfig extends FieldConfig {
  * General component which can render either a text or number input, with label,
  * depending on the configuration provided.
  */
-const Input = (props: FormComponentProps<InputFieldConfig>) => {
+const Input = (props: FieldProps<InputFieldConfig>) => {
   const { className, fieldConfig, fieldKit } = props;
 
   const elemName = fieldConfig.name;
@@ -33,6 +34,7 @@ const Input = (props: FormComponentProps<InputFieldConfig>) => {
         onChange={fieldKit.handleChange}
         onBlur={fieldKit.handleBlur}
         className="form-control"
+        placeholder={fieldConfig.placeholder}
         {...fieldConfig.other}
       />
       {validationError && fieldKit.touched[elemName] ? (

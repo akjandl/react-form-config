@@ -1,5 +1,5 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FormComponentProps, FieldConfig } from "../../forms/fieldConfigs";
+import { FieldProps, FieldConfig } from "../../forms/fieldConfigs";
 
 export interface SelectFieldConfig extends FieldConfig {
   labelText: string;
@@ -15,7 +15,7 @@ export interface SelectFieldConfig extends FieldConfig {
 /**
  * General component which renders a labeled select input
  */
-const Select = (props: FormComponentProps<SelectFieldConfig>) => {
+const Select = (props: FieldProps<SelectFieldConfig>) => {
   const { fieldConfig, fieldKit, className } = props;
   const elemName = fieldConfig.name;
   const validationError = fieldKit.errors[elemName];

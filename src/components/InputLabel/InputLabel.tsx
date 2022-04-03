@@ -1,6 +1,6 @@
 interface InputLabelProps {
   labelFor: string;
-  labelText: string;
+  labelText: string | JSX.Element;
   className?: string;
 }
 
