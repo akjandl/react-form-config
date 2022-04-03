@@ -4,7 +4,7 @@ export const vehicleGroupInputs = {
   vehicleMake: inputConfigs.vehicleMake,
   vehicleModel: inputConfigs.vehicleModel,
   hasTradeIn: inputConfigs.hasTradeIn,
-}
+};
 
 export const applicantGroupInputs = {
   hasCoapplicant: inputConfigs.hasCoapplicant,
