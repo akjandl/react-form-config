@@ -1,15 +1,13 @@
 import { FieldKit } from "../../forms/formUtils";
-import {
-  FieldInstructionAny,
-} from "../../forms/fieldInstructions";
+import { FieldInstructionAny } from "../../forms/fieldInstructions";
 
-interface FormElementProps {
+interface FieldBuilderProps {
   fieldInstructionAny: FieldInstructionAny;
   fieldKit: FieldKit;
   className?: string;
 }
 
-const FormElement: (props: FormElementProps) => JSX.Element = (props) => {
+const FieldBuilder: (props: FieldBuilderProps) => JSX.Element = (props) => {
   const { fieldInstructionAny, fieldKit, className } = props;
 
   const fieldInstruction =
@@ -28,4 +26,4 @@ const FormElement: (props: FormElementProps) => JSX.Element = (props) => {
   );
 };
 
-export default FormElement;
+export default FieldBuilder;

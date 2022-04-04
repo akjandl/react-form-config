@@ -1,15 +1,15 @@
 import * as yup from "yup";
 
-import FormGroup from "../../components/FormGroup/FormGroup";
+import FieldGroup from "../../components/FieldGroup/FieldGroup";
 import FormBuilder from "../../components/FormBuilder/FormBuilder";
 import Input, { InputConfig } from "../../components/Input/Input";
 import { FieldKit, FormKit, FormValues, FormActions } from "../formUtils";
-import {FieldInstructionBundle, FieldInstruction} from "../fieldInstructions";
+import { FieldInstructionBundle, FieldInstruction } from "../fieldInstructions";
 import {
   vehicleGroupInputs,
   applicantGroupInputs,
   coapplicantGroupInputs,
-} from "../fieldInstructions/formGroupInstructions";
+} from "../fieldInstructions/fieldInstructionBundles";
 
 const customInput: FieldInstruction<InputConfig> = {
   Component: Input,
@@ -19,7 +19,7 @@ const customInput: FieldInstruction<InputConfig> = {
     inputType: "text",
     className: "col-5",
     validator: yup.string().required("Required"),
-  }
+  },
 };
 
 const applicantInputs = { ...applicantGroupInputs, customInput };
@@ -49,23 +49,20 @@ const ApplicationForm = (props: ApplicationFormProps) => {
       onSubmit={props.onSubmit}
       overrideDefaultInitialValues={{}}
     >
-      {({
-        fieldKit,
-        formKit,
-      }: {
-        fieldKit: FieldKit;
-        formKit: FormKit;
-      }) => {
+      {({ fieldKit, formKit }: { fieldKit: FieldKit; formKit: FormKit }) => {
         return (
           <form onSubmit={formKit.handleSubmit}>
             <div className="row mt-3">
               <h3>Vehicle Info</h3>
-              <FormGroup fieldInstructionBundle={vehicleInputs} fieldKit={fieldKit} />
+              <FieldGroup
+                fieldInstructionBundle={vehicleInputs}
+                fieldKit={fieldKit}
+              />
             </div>
 
             <div className="row mt-3">
               <h3>Principal Applicant</h3>
-              <FormGroup
+              <FieldGroup
                 fieldInstructionBundle={applicantInputs}
                 fieldKit={fieldKit}
               />
@@ -74,7 +71,7 @@ const ApplicationForm = (props: ApplicationFormProps) => {
             {fieldKit.values.hasCoapplicant && (
               <div className="row mt-3">
                 <h3>Co-Applicant</h3>
-                <FormGroup
+                <FieldGroup
                   fieldInstructionBundle={coapplicantInputs}
                   fieldKit={fieldKit}
                 />
