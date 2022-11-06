@@ -26,14 +26,10 @@ export interface FieldInstruction<FC extends FieldConfig> {
   Component: (props: FieldProps<FC>) => JSX.Element;
   config: FC;
 }
-/**
- * Parameters will be passed to the func when the field is being rendered.
- * Parameters are only optional because the config creation func will be called
- * during form setup without parameters.
- */
+
 export type FieldInstructionCreator<FC extends FieldConfig> = (
-  formValues?: FormValues,
-  fieldKit?: FieldKit
+  formValues: FormValues,
+  fieldKit: FieldKit
 ) => FieldInstruction<FC>;
 
 export type FieldInstructionAny =
@@ -278,10 +274,6 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
   formValues,
   fieldKit
 ) => {
-  const label = formValues?.hasCoapplicant
-    ? "Remove Co-Applicant"
-    : "Add Co-Applicant";
-
   // Adding this "scolding" message really should be accomplished
   // through validation (or not at all 😉) but the Checkbox component
   // does not allow for a validation message.
@@ -290,13 +282,18 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
   // config can be manipulated by any data within the fieldKit.
   let scolding: JSX.Element | string = "";
   if (
-    fieldKit?.errors.coapplicantFirstName &&
-    fieldKit?.touched.coapplicantFirstName
+    fieldKit.errors.coapplicantFirstName &&
+    fieldKit.touched.coapplicantFirstName
   ) {
     scolding = (
       <i style={{ color: "red" }}> (do you really have a Co-Applicant...?)</i>
     );
   }
+
+  const label = formValues?.hasCoapplicant
+    ? "Remove Co-Applicant"
+    : "Add Co-Applicant";
+
 
   return {
     Component: Checkbox,

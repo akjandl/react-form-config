@@ -7,18 +7,28 @@ import {
   mapFormikPropsToFormKit,
   FormValues,
   FormActions,
+  FieldKit,
+  FormKit,
 } from "../../forms/formUtils";
 import { FieldInstructionBundle } from "../../forms/fieldInstructions";
 
-interface FormHelperProps {
+interface FormBuilderProps {
   fieldInstructionBundle: FieldInstructionBundle;
   onSubmit: (values: FormValues, actions: FormActions) => void | Promise<any>;
-  children: React.ReactNode;
-  overrideDefaultInitialValues?: FormValues;
+  children:
+    | JSX.Element
+    | (({
+        fieldKit,
+        formKit,
+      }: {
+        fieldKit: FieldKit;
+        formKit: FormKit;
+      }) => JSX.Element);
   enableReinitialize?: boolean;
+  overrideDefaultInitialValues?: FormValues;
 }
 
-const FormBuilder = (props: FormHelperProps) => {
+const FormBuilder = (props: FormBuilderProps) => {
   const defaultInitialValues = {
     ...initialValuesFromFieldInstructionBundle(props.fieldInstructionBundle),
   };
