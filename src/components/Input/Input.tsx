@@ -14,30 +14,29 @@ export interface InputConfig extends FieldConfig {
  * depending on the configuration provided.
  */
 const Input = (props: FieldProps<InputConfig>) => {
-  const { className, fieldConfig, fieldKit } = props;
+  const { fieldName, className, fieldConfig, fieldKit } = props;
 
-  const elemName = fieldConfig.name;
-  const validationError = fieldKit.errors[elemName];
+  const validationError = fieldKit.errors[fieldName];
 
   return (
     <div className={className || fieldConfig.className}>
       <InputLabel
-        labelFor={elemName}
+        labelFor={fieldName}
         labelText={fieldConfig.labelText}
         className="mt-2 mb-1 text-nowrap"
       />
       <input
         type={fieldConfig.inputType}
-        id={fieldConfig.id || elemName}
-        name={elemName}
-        value={fieldKit.values[elemName]}
+        id={fieldConfig.id || fieldName}
+        name={fieldName}
+        value={fieldKit.values[fieldName]}
         onChange={fieldKit.handleChange}
         onBlur={fieldKit.handleBlur}
         className="form-control"
         placeholder={fieldConfig.placeholder}
         {...fieldConfig.other}
       />
-      {validationError && fieldKit.touched[elemName] ? (
+      {validationError && fieldKit.touched[fieldName] ? (
         <div style={{ color: "red" }}>{validationError}</div>
       ) : null}
     </div>
