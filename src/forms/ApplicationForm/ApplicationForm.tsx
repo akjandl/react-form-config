@@ -14,7 +14,6 @@ import {
 const customInput: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "customInput",
     labelText: <span className="text-warning">Customized Input</span>,
     inputType: "text",
     className: "col-12",

@@ -9,14 +9,13 @@ import Select, { SelectConfig } from "../../components/Select/Select";
 import { FormValues, FieldKit } from "../formUtils";
 
 export interface FieldConfig {
-  type?: string;
-  name: string;
-  validator: Validator;
+  validator?: Validator;
   initialValue?: any;
   id?: string;
 }
 
 export interface FieldProps<FC extends FieldConfig> {
+  fieldName: string;
   fieldConfig: FC;
   fieldKit: FieldKit;
   className?: string;
@@ -43,7 +42,8 @@ export interface FieldInstructionBundle {
 type Validator =
   | yup.AnySchema
   | null
-  | ((values: FormValues) => yup.AnySchema | null);
+  | undefined
+  | ((values: FormValues) => yup.AnySchema | null | undefined);
 
 /**
  * Utility function for copying the validator of an applicant field, for the co-applicant,
@@ -52,8 +52,8 @@ type Validator =
  */
 const buildCoapplicantValidator = <FC extends FieldConfig>(
   fieldInstruction: FieldInstruction<FC>
-): ((values: FormValues) => yup.AnySchema | null) => {
-  return (values) => {
+) => {
+  return (values: FormValues) => {
     if (!values.hasCoapplicant) {
       return null; // no validation when no co-applicant
     }
@@ -70,7 +70,6 @@ const buildCoapplicantValidator = <FC extends FieldConfig>(
 export const firstName: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "firstName",
     labelText: "First Name",
     inputType: "text",
     className: "col-5",
@@ -81,7 +80,6 @@ export const firstName: FieldInstruction<InputConfig> = {
 export const middleInitial: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "middleInitial",
     labelText: "Middle Initial",
     inputType: "text",
     className: "col-2",
@@ -92,7 +90,6 @@ export const middleInitial: FieldInstruction<InputConfig> = {
 export const lastName: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "lastName",
     labelText: "Last Name",
     inputType: "text",
     className: "col-5",
@@ -103,7 +100,6 @@ export const lastName: FieldInstruction<InputConfig> = {
 export const streetAddr: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "streetAddr",
     labelText: "Street Address",
     inputType: "text",
     className: "col-10",
@@ -114,7 +110,6 @@ export const streetAddr: FieldInstruction<InputConfig> = {
 export const city: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "city",
     labelText: "City",
     inputType: "text",
     className: "col-6",
@@ -125,7 +120,6 @@ export const city: FieldInstruction<InputConfig> = {
 export const state: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "state",
     labelText: "State",
     inputType: "text",
     className: "col-2",
@@ -140,7 +134,6 @@ export const state: FieldInstruction<InputConfig> = {
 export const yearsAtResidence: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    name: "yearsAtResidence",
     labelText: "Years At Residence",
     inputType: "number",
     className: "col-2",
@@ -161,7 +154,6 @@ export const yearsAtResidence: FieldInstruction<InputConfig> = {
 export const vehicleMake: FieldInstruction<SelectConfig> = {
   Component: Select,
   config: {
-    name: "vehicleMake",
     labelText: "Vehicle Make",
     className: "col-6",
     options: [
@@ -177,7 +169,6 @@ export const vehicleMake: FieldInstruction<SelectConfig> = {
 export const vehicleModel: FieldInstruction<SelectConfig> = {
   Component: Select,
   config: {
-    name: "vehicleModel",
     labelText: "Vehicle Model",
     className: "col-6",
     options: [
@@ -189,11 +180,11 @@ export const vehicleModel: FieldInstruction<SelectConfig> = {
     validator: yup.string().required("Required"),
   },
 };
+
 export const coapplicantFirstName: FieldInstruction<InputConfig> = {
   ...firstName,
   config: {
     ...firstName.config,
-    name: "coapplicantFirstName",
     validator: buildCoapplicantValidator(firstName),
   },
 };
@@ -202,7 +193,6 @@ export const coapplicantMiddleInitial: FieldInstruction<InputConfig> = {
   ...middleInitial,
   config: {
     ...middleInitial.config,
-    name: "coapplicantMiddleInitial",
     validator: buildCoapplicantValidator(middleInitial),
   },
 };
@@ -211,7 +201,6 @@ export const coapplicantLastName: FieldInstruction<InputConfig> = {
   ...lastName,
   config: {
     ...lastName.config,
-    name: "coapplicantLastName",
     validator: buildCoapplicantValidator(lastName),
   },
 };
@@ -220,7 +209,6 @@ export const coapplicantStreetAddr: FieldInstruction<InputConfig> = {
   ...streetAddr,
   config: {
     ...streetAddr.config,
-    name: "coapplicantStreetAddr",
     validator: buildCoapplicantValidator(streetAddr),
   },
 };
@@ -229,7 +217,6 @@ export const coapplicantCity: FieldInstruction<InputConfig> = {
   ...city,
   config: {
     ...city.config,
-    name: "coapplicantCity",
     validator: buildCoapplicantValidator(city),
   },
 };
@@ -238,7 +225,6 @@ export const coapplicantState: FieldInstruction<InputConfig> = {
   ...state,
   config: {
     ...state.config,
-    name: "coapplicantState",
     validator: buildCoapplicantValidator(state),
   },
 };
@@ -247,7 +233,6 @@ export const coapplicantYearsAtResidence: FieldInstruction<InputConfig> = {
   ...yearsAtResidence,
   config: {
     ...yearsAtResidence.config,
-    name: "coapplicantYearsAtResidence",
     validator: buildCoapplicantValidator(yearsAtResidence),
   },
 };
@@ -255,7 +240,6 @@ export const coapplicantYearsAtResidence: FieldInstruction<InputConfig> = {
 export const hasTradeIn: FieldInstruction<ButtonToggleConfig> = {
   Component: ButtonToggle,
   config: {
-    name: "hasTradeIn",
     labelText: "Has Trade In",
     validator: yup.boolean().required("Required"),
     initialValue: false,
@@ -286,7 +270,7 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
     fieldKit.touched.coapplicantFirstName
   ) {
     scolding = (
-      <i style={{ color: "red" }}> (do you really have a Co-Applicant...?)</i>
+      <i style={{ color: "pink" }}> (do you really have a Co-Applicant...?)</i>
     );
   }
 
@@ -298,7 +282,6 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
   return {
     Component: Checkbox,
     config: {
-      name: "hasCoapplicant",
       labelText: (
         <span>
           {label}

@@ -16,21 +16,20 @@ export interface SelectConfig extends FieldConfig {
  * General component which renders a labeled select input
  */
 const Select = (props: FieldProps<SelectConfig>) => {
-  const { fieldConfig, fieldKit, className } = props;
-  const elemName = fieldConfig.name;
-  const validationError = fieldKit.errors[elemName];
+  const { fieldName, fieldConfig, fieldKit, className } = props;
+  const validationError = fieldKit.errors[fieldName];
 
   return (
     <div className={className || fieldConfig.className}>
       <InputLabel
-        labelFor={elemName}
+        labelFor={fieldName}
         labelText={fieldConfig.labelText}
         className="mt-2 mb-1 text-nowrap"
       />
       <select
-        id={fieldConfig.id || elemName}
-        name={elemName}
-        value={fieldKit.values[elemName]}
+        id={fieldConfig.id || fieldName}
+        name={fieldName}
+        value={fieldKit.values[fieldName]}
         onChange={fieldKit.handleChange}
         onBlur={fieldKit.handleBlur}
         className="form-select"
@@ -42,7 +41,7 @@ const Select = (props: FieldProps<SelectConfig>) => {
           </option>
         ))}
       </select>
-      {validationError && fieldKit.touched[elemName] ? (
+      {validationError && fieldKit.touched[fieldName] ? (
         <div style={{ color: "red" }}>{validationError}</div>
       ) : null}
     </div>

@@ -2,13 +2,14 @@ import { FieldKit } from "../../forms/formUtils";
 import { FieldInstructionAny } from "../../forms/fieldInstructions";
 
 interface FieldBuilderProps {
+  fieldName: string;
   fieldInstructionAny: FieldInstructionAny;
   fieldKit: FieldKit;
   className?: string;
 }
 
 const FieldBuilder: (props: FieldBuilderProps) => JSX.Element = (props) => {
-  const { fieldInstructionAny, fieldKit, className } = props;
+  const { fieldName, fieldInstructionAny, fieldKit, className } = props;
 
   const fieldInstruction =
     typeof fieldInstructionAny === "function"
@@ -19,6 +20,7 @@ const FieldBuilder: (props: FieldBuilderProps) => JSX.Element = (props) => {
 
   return (
     <Component
+      fieldName={fieldName}
       fieldConfig={fieldInstruction.config}
       fieldKit={fieldKit}
       className={className}

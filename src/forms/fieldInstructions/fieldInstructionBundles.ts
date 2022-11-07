@@ -1,12 +1,13 @@
 import * as fieldInstructions from "./index";
+import { FieldInstructionBundle } from "../fieldInstructions/index";
 
-export const vehicleGroupInputs = {
+export const vehicleGroupInputs: FieldInstructionBundle = {
   vehicleMake: fieldInstructions.vehicleMake,
   vehicleModel: fieldInstructions.vehicleModel,
   hasTradeIn: fieldInstructions.hasTradeIn,
 };
 
-export const applicantGroupInputs = {
+export const applicantGroupInputs: FieldInstructionBundle = {
   hasCoapplicant: fieldInstructions.hasCoapplicant,
   firstName: fieldInstructions.firstName,
   middleInitial: fieldInstructions.middleInitial,
@@ -17,7 +18,7 @@ export const applicantGroupInputs = {
   yearsAtResidence: fieldInstructions.yearsAtResidence,
 };
 
-export const coapplicantGroupInputs = {
+export const coapplicantGroupInputs: FieldInstructionBundle = {
   coapplicantFirstName: fieldInstructions.coapplicantFirstName,
   coapplicantMiddleInitial: fieldInstructions.coapplicantMiddleInitial,
   coapplicantLastName: fieldInstructions.coapplicantLastName,
