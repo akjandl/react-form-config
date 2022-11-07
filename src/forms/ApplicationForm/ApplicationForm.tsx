@@ -15,9 +15,10 @@ const customInput: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
     name: "customInput",
-    labelText: "Custom Input",
+    labelText: <span className="text-warning">Customized Input</span>,
     inputType: "text",
-    className: "col-5",
+    className: "col-12",
+    placeholder: "adding a custom input to the principal applicant group",
     validator: yup.string().required("Required"),
   },
 };
