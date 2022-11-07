@@ -242,7 +242,7 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
     );
   }
 
-  const label = formValues?.hasCoapplicant
+  const label = formValues.hasCoapplicant
     ? "Remove Co-Applicant"
     : "Add Co-Applicant";
 
