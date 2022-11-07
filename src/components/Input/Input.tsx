@@ -1,7 +1,7 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FieldProps, FieldConfig } from "../../FormBuilder";
+import { FieldProps, FieldConfigBase } from "../../FormBuilder";
 
-export interface InputConfig extends FieldConfig {
+export interface InputConfig extends FieldConfigBase {
   label: string | JSX.Element;
   className: string;
   inputType: "text" | "number";

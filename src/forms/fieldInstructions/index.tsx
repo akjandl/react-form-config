@@ -8,7 +8,7 @@ import Input, { InputConfig } from "../../components/Input/Input";
 import Select, { SelectConfig } from "../../components/Select/Select";
 import {
   FormValues,
-  FieldConfig,
+  FieldConfigBase,
   FieldInstruction,
   FieldInstructionCreator,
 } from "../../FormBuilder";
@@ -18,7 +18,7 @@ import {
  * on a joint application. Prevents validation of coapplicant fields when
  * the application is not joint.
  */
-const buildCoapplicantValidator = <FC extends FieldConfig>(
+const buildCoapplicantValidator = <FC extends FieldConfigBase>(
   fieldInstruction: FieldInstruction<FC>
 ) => {
   return (values: FormValues) => {
@@ -122,7 +122,7 @@ export const yearsAtResidence: FieldInstruction<InputConfig> = {
 export const vehicleMake: FieldInstruction<SelectConfig> = {
   Component: Select,
   config: {
-    labelText: "Vehicle Make",
+    label: "Vehicle Make",
     className: "col-6",
     options: [
       { value: "", displayValue: "", disabled: true },
@@ -137,7 +137,7 @@ export const vehicleMake: FieldInstruction<SelectConfig> = {
 export const vehicleModel: FieldInstruction<SelectConfig> = {
   Component: Select,
   config: {
-    labelText: "Vehicle Model",
+    label: "Vehicle Model",
     className: "col-6",
     options: [
       { value: "", displayValue: "", disabled: true },
@@ -208,7 +208,7 @@ export const coapplicantYearsAtResidence: FieldInstruction<InputConfig> = {
 export const hasTradeIn: FieldInstruction<ButtonToggleConfig> = {
   Component: ButtonToggle,
   config: {
-    labelText: "Has Trade In",
+    label: "Has Trade In",
     validator: yup.boolean().required("Required"),
     initialValue: false,
     buttonConfigs: [
@@ -249,7 +249,7 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
   return {
     Component: Checkbox,
     config: {
-      labelText: (
+      label: (
         <span>
           {label}
           {scolding}

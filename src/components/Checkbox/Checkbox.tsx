@@ -1,8 +1,8 @@
-import { FieldConfig, FieldProps } from "../../FormBuilder";
+import { FieldConfigBase, FieldProps } from "../../FormBuilder";
 import InputLabel from "../InputLabel/InputLabel";
 
-export interface CheckboxConfig extends FieldConfig {
-  labelText: string | JSX.Element;
+export interface CheckboxConfig extends FieldConfigBase {
+  label: string | JSX.Element;
   other?: object;
   className?: string;
 }
@@ -29,7 +29,7 @@ const Checkbox = (props: FieldProps<CheckboxConfig>) => {
         />
         <InputLabel
           labelFor={fieldName}
-          labelText={fieldConfig.labelText}
+          labelText={fieldConfig.label}
           className="form-check-label"
         />
       </div>

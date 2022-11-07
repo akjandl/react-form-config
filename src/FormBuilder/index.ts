@@ -6,25 +6,25 @@ import {
 } from "formik";
 import * as yup from "yup";
 
-export interface FieldConfig {
+export interface FieldConfigBase {
   validator?: Validator;
   initialValue?: any;
   id?: string;
 }
 
-export interface FieldProps<FC extends FieldConfig> {
+export interface FieldProps<FC extends FieldConfigBase> {
   fieldName: string;
   fieldConfig: FC;
   fieldKit: FieldKit;
   className?: string;
 }
 
-export interface FieldInstruction<FC extends FieldConfig> {
+export interface FieldInstruction<FC extends FieldConfigBase> {
   Component: (props: FieldProps<FC>) => JSX.Element;
   config: FC;
 }
 
-export type FieldInstructionCreator<FC extends FieldConfig> = (
+export type FieldInstructionCreator<FC extends FieldConfigBase> = (
   formValues: FormValues,
   fieldKit: FieldKit
 ) => FieldInstruction<FC>;

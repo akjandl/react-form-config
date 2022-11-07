@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FieldProps, FieldConfig } from "../../FormBuilder";
+import { FieldProps, FieldConfigBase } from "../../FormBuilder";
 
-export interface ButtonToggleConfig extends FieldConfig {
-  labelText: string;
+export interface ButtonToggleConfig extends FieldConfigBase {
+  label: string | JSX.Element;
   buttonConfigs: ButtonConfig[];
   className?: string;
 }
@@ -31,7 +31,7 @@ const ButtonToggle: (props: FieldProps<ButtonToggleConfig>) => JSX.Element = (
       <div className="row">
         <InputLabel
           labelFor={fieldName}
-          labelText={fieldConfig.labelText}
+          labelText={fieldConfig.label}
           className="mt-2 mb-1 text-nowrap"
         />
         <div className="col-12">

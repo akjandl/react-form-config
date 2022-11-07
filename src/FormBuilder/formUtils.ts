@@ -6,12 +6,12 @@ import {
   FieldKitErrors,
   FieldKit,
   FormKit,
-  FieldConfig,
+  FieldConfigBase,
   FieldInstructionBundle,
   FieldInstructionAny,
 } from "./index";
 
-const configFromFieldInstructionAny = <FC extends FieldConfig>(
+const configFromFieldInstructionAny = <FC extends FieldConfigBase>(
   fieldInstructionAny: FieldInstructionAny
 ): FC => {
   if (typeof fieldInstructionAny === "function") {
