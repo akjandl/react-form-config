@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FieldProps, FieldConfig } from "../../forms/fieldInstructions";
+import { FieldProps, FieldConfigBase } from "../../FormBuilder";
 
-export interface InputConfig extends FieldConfig {
-  labelText: string | JSX.Element;
+export interface InputConfig extends FieldConfigBase {
+  label: string | JSX.Element;
   className: string;
   inputType: "text" | "number";
   placeholder?: string;
@@ -22,7 +22,7 @@ const Input = (props: FieldProps<InputConfig>) => {
     <div className={className || fieldConfig.className}>
       <InputLabel
         labelFor={fieldName}
-        labelText={fieldConfig.labelText}
+        labelText={fieldConfig.label}
         className="mt-2 mb-1 text-nowrap"
       />
       <input

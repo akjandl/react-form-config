@@ -1,19 +1,17 @@
-import {
-  FormikProps,
-  FormikValues,
-  FormikTouched,
-  FormikHandlers,
-  FormikHelpers,
-} from "formik";
+import { FormikProps } from "formik";
 import * as yup from "yup";
 
 import {
+  FormValues,
+  FieldKitErrors,
+  FieldKit,
+  FormKit,
+  FieldConfigBase,
   FieldInstructionBundle,
   FieldInstructionAny,
-  FieldConfig,
-} from "./fieldInstructions";
+} from "./index";
 
-const configFromFieldInstructionAny = <FC extends FieldConfig>(
+const configFromFieldInstructionAny = <FC extends FieldConfigBase>(
   fieldInstructionAny: FieldInstructionAny
 ): FC => {
   if (typeof fieldInstructionAny === "function") {
@@ -50,25 +48,6 @@ export const initialValuesFromFieldInstructionBundle = (
     return acc;
   }, {});
 };
-
-export type FormValues = FormikValues;
-export type FormActions = FormikHelpers<FormValues>;
-type FieldKitErrors = { [K in keyof FormValues]: string };
-
-export interface FieldKit {
-  values: FormValues;
-  errors: FieldKitErrors;
-  touched: FormikTouched<FormValues>;
-  handleChange: FormikHandlers["handleChange"];
-  handleBlur: FormikHandlers["handleBlur"];
-  setFieldValue: FormikHelpers<FormValues>["setFieldValue"];
-  setFieldTouched: FormikHelpers<FormValues>["setFieldTouched"];
-  setFieldError: FormikHelpers<FormValues>["setFieldError"];
-}
-
-export interface FormKit {
-  handleSubmit: FormikHandlers["handleSubmit"];
-}
 
 export const mapFormikPropsToFieldKit: (
   fp: FormikProps<FormValues>

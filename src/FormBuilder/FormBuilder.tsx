@@ -5,12 +5,14 @@ import {
   validationSchemaFromFieldInstructionBundle,
   mapFormikPropsToFieldKit,
   mapFormikPropsToFormKit,
+} from "./formUtils";
+import {
+  FieldInstructionBundle,
   FormValues,
   FormActions,
   FieldKit,
   FormKit,
-} from "../../forms/formUtils";
-import { FieldInstructionBundle } from "../../forms/fieldInstructions";
+} from "../FormBuilder";
 
 interface FormBuilderProps {
   fieldInstructionBundle: FieldInstructionBundle;

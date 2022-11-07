@@ -1,5 +1,5 @@
 import * as fieldInstructions from "./index";
-import { FieldInstructionBundle } from "../fieldInstructions/index";
+import { FieldInstructionBundle } from "../../FormBuilder";
 
 export const vehicleGroupInputs: FieldInstructionBundle = {
   vehicleMake: fieldInstructions.vehicleMake,

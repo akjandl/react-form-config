@@ -1,8 +1,8 @@
 import InputLabel from "../InputLabel/InputLabel";
-import { FieldProps, FieldConfig } from "../../forms/fieldInstructions";
+import { FieldProps, FieldConfigBase } from "../../FormBuilder";
 
-export interface SelectConfig extends FieldConfig {
-  labelText: string;
+export interface SelectConfig extends FieldConfigBase {
+  label: string;
   options: {
     value: string | number;
     displayValue: string;
@@ -23,7 +23,7 @@ const Select = (props: FieldProps<SelectConfig>) => {
     <div className={className || fieldConfig.className}>
       <InputLabel
         labelFor={fieldName}
-        labelText={fieldConfig.labelText}
+        labelText={fieldConfig.label}
         className="mt-2 mb-1 text-nowrap"
       />
       <select
