@@ -278,7 +278,6 @@ export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
     ? "Remove Co-Applicant"
     : "Add Co-Applicant";
 
-
   return {
     Component: Checkbox,
     config: {

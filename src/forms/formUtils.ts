@@ -100,7 +100,7 @@ export const validationSchemaFromFieldInstructionBundle = (
     return yup.object().shape(
       Object.keys(fieldInstructionBundle).reduce(
         (acc: { [key: string]: yup.AnySchema }, fieldName: string) => {
-          const config: FieldConfig = configFromFieldInstructionAny(
+          const config = configFromFieldInstructionAny(
             fieldInstructionBundle[fieldName]
           );
           acc[fieldName] =
