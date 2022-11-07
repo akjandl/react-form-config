@@ -19,15 +19,20 @@ export interface FieldProps<FC extends FieldConfigBase> {
   className?: string;
 }
 
-export interface FieldInstruction<FC extends FieldConfigBase> {
-  Component: (props: FieldProps<FC>) => JSX.Element;
-  config: FC;
+export type ConfigFromFieldComponent<C extends FieldComponent> =
+  Parameters<C>[0]["fieldConfig"];
+
+export type FieldComponent = (props: FieldProps<any>) => JSX.Element;
+
+export interface FieldInstruction<C extends FieldComponent> {
+  Component: C;
+  config: Parameters<C>[0]["fieldConfig"];
 }
 
-export type FieldInstructionCreator<FC extends FieldConfigBase> = (
+export type FieldInstructionCreator<C extends FieldComponent> = (
   formValues: FormValues,
   fieldKit: FieldKit
-) => FieldInstruction<FC>;
+) => FieldInstruction<C>;
 
 export type FieldInstructionAny =
   | FieldInstruction<any>

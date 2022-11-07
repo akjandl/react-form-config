@@ -6,14 +6,15 @@ import {
   FieldKitErrors,
   FieldKit,
   FormKit,
-  FieldConfigBase,
+  FieldComponent,
+  ConfigFromFieldComponent,
   FieldInstructionBundle,
   FieldInstructionAny,
 } from "./index";
 
-const configFromFieldInstructionAny = <FC extends FieldConfigBase>(
+const configFromFieldInstructionAny = <C extends FieldComponent>(
   fieldInstructionAny: FieldInstructionAny
-): FC => {
+): ConfigFromFieldComponent<C> => {
   if (typeof fieldInstructionAny === "function") {
     const noOpFieldKit = {
       values: {},
