@@ -26,7 +26,7 @@ export type FieldComponent = (props: FieldProps<any>) => JSX.Element;
 
 export interface FieldInstruction<C extends FieldComponent> {
   Component: C;
-  config: Parameters<C>[0]["fieldConfig"];
+  config: ConfigFromFieldComponent<C>;
 }
 
 export type FieldInstructionCreator<C extends FieldComponent> = (
