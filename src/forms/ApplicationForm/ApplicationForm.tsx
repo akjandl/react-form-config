@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 import FieldGroup from "../../FormBuilder/FieldGroup/FieldGroup";
 import FormBuilder from "../../FormBuilder/FormBuilder";
-import Input, { InputConfig } from "../../components/Input/Input";
+import Input from "../../components/Input/Input";
 import {
   FieldKit,
   FormKit,
@@ -17,7 +17,7 @@ import {
   coapplicantGroupInputs,
 } from "../fieldInstructions/fieldInstructionBundles";
 
-const customInput: FieldInstruction<InputConfig> = {
+const customInput: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: <span className="text-warning">Customized Input</span>,

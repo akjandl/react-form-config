@@ -1,14 +1,12 @@
 import * as yup from "yup";
 
-import ButtonToggle, {
-  ButtonToggleConfig,
-} from "../../components/ButtonToggle/ButtonToggle";
-import Checkbox, { CheckboxConfig } from "../../components/Checkbox/Checkbox";
-import Input, { InputConfig } from "../../components/Input/Input";
-import Select, { SelectConfig } from "../../components/Select/Select";
+import ButtonToggle from "../../components/ButtonToggle/ButtonToggle";
+import Checkbox from "../../components/Checkbox/Checkbox";
+import Input from "../../components/Input/Input";
+import Select from "../../components/Select/Select";
 import {
   FormValues,
-  FieldConfigBase,
+  FieldComponent,
   FieldInstruction,
   FieldInstructionCreator,
 } from "../../FormBuilder";
@@ -18,8 +16,8 @@ import {
  * on a joint application. Prevents validation of coapplicant fields when
  * the application is not joint.
  */
-const buildCoapplicantValidator = <FC extends FieldConfigBase>(
-  fieldInstruction: FieldInstruction<FC>
+const buildCoapplicantValidator = <C extends FieldComponent>(
+  fieldInstruction: FieldInstruction<C>
 ) => {
   return (values: FormValues) => {
     if (!values.hasCoapplicant) {
@@ -35,7 +33,7 @@ const buildCoapplicantValidator = <FC extends FieldConfigBase>(
 // * Instructions for form fields.
 // ********************************************************************
 
-export const firstName: FieldInstruction<InputConfig> = {
+export const firstName: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "First Name",
@@ -45,7 +43,7 @@ export const firstName: FieldInstruction<InputConfig> = {
   },
 };
 
-export const middleInitial: FieldInstruction<InputConfig> = {
+export const middleInitial: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "Middle Initial",
@@ -55,7 +53,7 @@ export const middleInitial: FieldInstruction<InputConfig> = {
   },
 };
 
-export const lastName: FieldInstruction<InputConfig> = {
+export const lastName: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "Last Name",
@@ -65,7 +63,7 @@ export const lastName: FieldInstruction<InputConfig> = {
   },
 };
 
-export const streetAddr: FieldInstruction<InputConfig> = {
+export const streetAddr: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "Street Address",
@@ -75,7 +73,7 @@ export const streetAddr: FieldInstruction<InputConfig> = {
   },
 };
 
-export const city: FieldInstruction<InputConfig> = {
+export const city: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "City",
@@ -85,7 +83,7 @@ export const city: FieldInstruction<InputConfig> = {
   },
 };
 
-export const state: FieldInstruction<InputConfig> = {
+export const state: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "State",
@@ -99,7 +97,7 @@ export const state: FieldInstruction<InputConfig> = {
   },
 };
 
-export const yearsAtResidence: FieldInstruction<InputConfig> = {
+export const yearsAtResidence: FieldInstruction<typeof Input> = {
   Component: Input,
   config: {
     label: "Years At Residence",
@@ -119,7 +117,7 @@ export const yearsAtResidence: FieldInstruction<InputConfig> = {
   },
 };
 
-export const vehicleMake: FieldInstruction<SelectConfig> = {
+export const vehicleMake: FieldInstruction<typeof Select> = {
   Component: Select,
   config: {
     label: "Vehicle Make",
@@ -134,7 +132,7 @@ export const vehicleMake: FieldInstruction<SelectConfig> = {
   },
 };
 
-export const vehicleModel: FieldInstruction<SelectConfig> = {
+export const vehicleModel: FieldInstruction<typeof Select> = {
   Component: Select,
   config: {
     label: "Vehicle Model",
@@ -149,7 +147,7 @@ export const vehicleModel: FieldInstruction<SelectConfig> = {
   },
 };
 
-export const coapplicantFirstName: FieldInstruction<InputConfig> = {
+export const coapplicantFirstName: FieldInstruction<typeof Input> = {
   ...firstName,
   config: {
     ...firstName.config,
@@ -157,7 +155,7 @@ export const coapplicantFirstName: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantMiddleInitial: FieldInstruction<InputConfig> = {
+export const coapplicantMiddleInitial: FieldInstruction<typeof Input> = {
   ...middleInitial,
   config: {
     ...middleInitial.config,
@@ -165,7 +163,7 @@ export const coapplicantMiddleInitial: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantLastName: FieldInstruction<InputConfig> = {
+export const coapplicantLastName: FieldInstruction<typeof Input> = {
   ...lastName,
   config: {
     ...lastName.config,
@@ -173,7 +171,7 @@ export const coapplicantLastName: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantStreetAddr: FieldInstruction<InputConfig> = {
+export const coapplicantStreetAddr: FieldInstruction<typeof Input> = {
   ...streetAddr,
   config: {
     ...streetAddr.config,
@@ -181,7 +179,7 @@ export const coapplicantStreetAddr: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantCity: FieldInstruction<InputConfig> = {
+export const coapplicantCity: FieldInstruction<typeof Input> = {
   ...city,
   config: {
     ...city.config,
@@ -189,7 +187,7 @@ export const coapplicantCity: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantState: FieldInstruction<InputConfig> = {
+export const coapplicantState: FieldInstruction<typeof Input> = {
   ...state,
   config: {
     ...state.config,
@@ -197,7 +195,7 @@ export const coapplicantState: FieldInstruction<InputConfig> = {
   },
 };
 
-export const coapplicantYearsAtResidence: FieldInstruction<InputConfig> = {
+export const coapplicantYearsAtResidence: FieldInstruction<typeof Input> = {
   ...yearsAtResidence,
   config: {
     ...yearsAtResidence.config,
@@ -205,7 +203,7 @@ export const coapplicantYearsAtResidence: FieldInstruction<InputConfig> = {
   },
 };
 
-export const hasTradeIn: FieldInstruction<ButtonToggleConfig> = {
+export const hasTradeIn: FieldInstruction<typeof ButtonToggle> = {
   Component: ButtonToggle,
   config: {
     label: "Has Trade In",
@@ -222,7 +220,7 @@ export const hasTradeIn: FieldInstruction<ButtonToggleConfig> = {
  * This hasCoapplicant checkbox is contrived and overly complex on purpose.
  * This is meant to show how flexible field generation can be.
  */
-export const hasCoapplicant: FieldInstructionCreator<CheckboxConfig> = (
+export const hasCoapplicant: FieldInstructionCreator<typeof Checkbox> = (
   formValues,
   fieldKit
 ) => {
