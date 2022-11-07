@@ -6,7 +6,7 @@ import ButtonToggle, {
 import Checkbox, { CheckboxConfig } from "../../components/Checkbox/Checkbox";
 import Input, { InputConfig } from "../../components/Input/Input";
 import Select, { SelectConfig } from "../../components/Select/Select";
-import { FormValues, FieldKit } from "../formUtils";
+import { FormValues, FieldKit } from "../../FormBuilder/formUtils";
 
 export interface FieldConfig {
   validator?: Validator;

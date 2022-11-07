@@ -11,7 +11,7 @@ import {
   FieldInstructionBundle,
   FieldInstructionAny,
   FieldConfig,
-} from "./fieldInstructions";
+} from "../forms/fieldInstructions";
 
 const configFromFieldInstructionAny = <FC extends FieldConfig>(
   fieldInstructionAny: FieldInstructionAny

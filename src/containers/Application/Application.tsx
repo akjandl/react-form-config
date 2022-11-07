@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { FormActions } from "../../forms/formUtils";
+import { FormActions } from "../../FormBuilder/formUtils";
 
 import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
-import { FormValues } from "../../forms/formUtils";
+import { FormValues } from "../../FormBuilder/formUtils";
 
 /**
  * Component to render form and ancillary elements related to the form.

@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
-import FieldGroup from "../../components/FieldGroup/FieldGroup";
-import FormBuilder from "../../components/FormBuilder/FormBuilder";
+import FieldGroup from "../../FormBuilder/FieldGroup/FieldGroup";
+import FormBuilder from "../../FormBuilder/FormBuilder";
 import Input, { InputConfig } from "../../components/Input/Input";
-import { FieldKit, FormKit, FormValues, FormActions } from "../formUtils";
+import { FieldKit, FormKit, FormValues, FormActions } from "../../FormBuilder/formUtils";
 import { FieldInstructionBundle, FieldInstruction } from "../fieldInstructions";
 import {
   vehicleGroupInputs,

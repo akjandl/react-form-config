@@ -9,8 +9,8 @@ import {
   FormActions,
   FieldKit,
   FormKit,
-} from "../../forms/formUtils";
-import { FieldInstructionBundle } from "../../forms/fieldInstructions";
+} from "./formUtils";
+import { FieldInstructionBundle } from "../forms/fieldInstructions";
 
 interface FormBuilderProps {
   fieldInstructionBundle: FieldInstructionBundle;

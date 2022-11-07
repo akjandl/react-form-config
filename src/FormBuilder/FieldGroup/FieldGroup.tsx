@@ -1,7 +1,7 @@
 import React from "react";
 
 import FieldBuilder from "../FieldBuilder/FieldBuilder";
-import { FieldKit } from "../../forms/formUtils";
+import { FieldKit } from "../formUtils";
 import { FieldInstructionBundle } from "../../forms/fieldInstructions";
 
 interface FieldGroupProps {
