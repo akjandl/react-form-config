@@ -1,5 +1,4 @@
-import { FieldKit } from "../formUtils";
-import { FieldInstructionAny } from "../../forms/fieldInstructions";
+import { FieldInstructionAny, FieldKit } from "../index";
 
 interface FieldBuilderProps {
   fieldName: string;

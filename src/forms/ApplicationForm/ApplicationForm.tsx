@@ -3,8 +3,14 @@ import * as yup from "yup";
 import FieldGroup from "../../FormBuilder/FieldGroup/FieldGroup";
 import FormBuilder from "../../FormBuilder/FormBuilder";
 import Input, { InputConfig } from "../../components/Input/Input";
-import { FieldKit, FormKit, FormValues, FormActions } from "../../FormBuilder/formUtils";
-import { FieldInstructionBundle, FieldInstruction } from "../fieldInstructions";
+import {
+  FieldKit,
+  FormKit,
+  FormValues,
+  FormActions,
+  FieldInstructionBundle,
+  FieldInstruction,
+} from "../../FormBuilder";
 import {
   vehicleGroupInputs,
   applicantGroupInputs,
@@ -14,7 +20,7 @@ import {
 const customInput: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: <span className="text-warning">Customized Input</span>,
+    label: <span className="text-warning">Customized Input</span>,
     inputType: "text",
     className: "col-12",
     placeholder: "adding a custom input to the principal applicant group",

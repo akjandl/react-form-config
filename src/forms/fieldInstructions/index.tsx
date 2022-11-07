@@ -6,44 +6,12 @@ import ButtonToggle, {
 import Checkbox, { CheckboxConfig } from "../../components/Checkbox/Checkbox";
 import Input, { InputConfig } from "../../components/Input/Input";
 import Select, { SelectConfig } from "../../components/Select/Select";
-import { FormValues, FieldKit } from "../../FormBuilder/formUtils";
-
-export interface FieldConfig {
-  validator?: Validator;
-  initialValue?: any;
-  id?: string;
-}
-
-export interface FieldProps<FC extends FieldConfig> {
-  fieldName: string;
-  fieldConfig: FC;
-  fieldKit: FieldKit;
-  className?: string;
-}
-
-export interface FieldInstruction<FC extends FieldConfig> {
-  Component: (props: FieldProps<FC>) => JSX.Element;
-  config: FC;
-}
-
-export type FieldInstructionCreator<FC extends FieldConfig> = (
-  formValues: FormValues,
-  fieldKit: FieldKit
-) => FieldInstruction<FC>;
-
-export type FieldInstructionAny =
-  | FieldInstruction<any>
-  | FieldInstructionCreator<any>;
-
-export interface FieldInstructionBundle {
-  [key: string]: FieldInstructionAny;
-}
-
-type Validator =
-  | yup.AnySchema
-  | null
-  | undefined
-  | ((values: FormValues) => yup.AnySchema | null | undefined);
+import {
+  FormValues,
+  FieldConfig,
+  FieldInstruction,
+  FieldInstructionCreator,
+} from "../../FormBuilder";
 
 /**
  * Utility function for copying the validator of an applicant field, for the co-applicant,
@@ -70,7 +38,7 @@ const buildCoapplicantValidator = <FC extends FieldConfig>(
 export const firstName: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "First Name",
+    label: "First Name",
     inputType: "text",
     className: "col-5",
     validator: yup.string().required("Required"),
@@ -80,7 +48,7 @@ export const firstName: FieldInstruction<InputConfig> = {
 export const middleInitial: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "Middle Initial",
+    label: "Middle Initial",
     inputType: "text",
     className: "col-2",
     validator: yup.string().max(1, "Max 1 character"),
@@ -90,7 +58,7 @@ export const middleInitial: FieldInstruction<InputConfig> = {
 export const lastName: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "Last Name",
+    label: "Last Name",
     inputType: "text",
     className: "col-5",
     validator: yup.string().required("Required"),
@@ -100,7 +68,7 @@ export const lastName: FieldInstruction<InputConfig> = {
 export const streetAddr: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "Street Address",
+    label: "Street Address",
     inputType: "text",
     className: "col-10",
     validator: yup.string().required("Required").min(5, "Min 5 characters"),
@@ -110,7 +78,7 @@ export const streetAddr: FieldInstruction<InputConfig> = {
 export const city: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "City",
+    label: "City",
     inputType: "text",
     className: "col-6",
     validator: yup.string().required("Required").min(5, "Min 5 characters"),
@@ -120,7 +88,7 @@ export const city: FieldInstruction<InputConfig> = {
 export const state: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "State",
+    label: "State",
     inputType: "text",
     className: "col-2",
     validator: yup
@@ -134,7 +102,7 @@ export const state: FieldInstruction<InputConfig> = {
 export const yearsAtResidence: FieldInstruction<InputConfig> = {
   Component: Input,
   config: {
-    labelText: "Years At Residence",
+    label: "Years At Residence",
     inputType: "number",
     className: "col-2",
     other: {
