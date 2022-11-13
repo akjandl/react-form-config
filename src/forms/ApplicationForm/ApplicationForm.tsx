@@ -2,9 +2,9 @@ import * as yup from "yup";
 
 import FieldGroup from "../../FormBuilder/FieldGroup/FieldGroup";
 import FormBuilder from "../../FormBuilder/FormBuilder";
+import Form from "../../FormBuilder/Form";
 import Input from "../../components/Input/Input";
 import {
-  FieldKit,
   FormKit,
   FormValues,
   FormActions,
@@ -55,32 +55,23 @@ const ApplicationForm = (props: ApplicationFormProps) => {
       onSubmit={props.onSubmit}
       overrideDefaultInitialValues={{}}
     >
-      {({ fieldKit, formKit }: { fieldKit: FieldKit; formKit: FormKit }) => {
+      {({ formKit }: { formKit: FormKit }) => {
         return (
-          <form onSubmit={formKit.handleSubmit}>
+          <Form>
             <div className="row mt-3">
               <h3>Vehicle Info</h3>
-              <FieldGroup
-                fieldInstructionBundle={vehicleInputs}
-                fieldKit={fieldKit}
-              />
+              <FieldGroup fieldInstructionBundle={vehicleInputs} />
             </div>
 
             <div className="row mt-3">
               <h3>Principal Applicant</h3>
-              <FieldGroup
-                fieldInstructionBundle={applicantInputs}
-                fieldKit={fieldKit}
-              />
+              <FieldGroup fieldInstructionBundle={applicantInputs} />
             </div>
 
-            {fieldKit.values.hasCoapplicant && (
+            {formKit.values.hasCoapplicant && (
               <div className="row mt-3">
                 <h3>Co-Applicant</h3>
-                <FieldGroup
-                  fieldInstructionBundle={coapplicantInputs}
-                  fieldKit={fieldKit}
-                />
+                <FieldGroup fieldInstructionBundle={coapplicantInputs} />
               </div>
             )}
 
@@ -91,7 +82,7 @@ const ApplicationForm = (props: ApplicationFormProps) => {
                 </button>
               </div>
             </div>
-          </form>
+          </Form>
         );
       }}
     </FormBuilder>

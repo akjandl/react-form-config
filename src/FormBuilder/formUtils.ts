@@ -70,6 +70,9 @@ export const mapFormikPropsToFormKit: (
 ) => FormKit = (formikProps) => {
   return {
     handleSubmit: formikProps.handleSubmit,
+    values: formikProps.values,
+    errors: formikProps.errors as FieldKitErrors,
+    touched: formikProps.touched,
   };
 };
 

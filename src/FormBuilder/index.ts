@@ -52,17 +52,25 @@ export type FormValues = FormikValues;
 export type FormActions = FormikHelpers<FormValues>;
 export type FieldKitErrors = { [K in keyof FormValues]: string };
 
-export interface FieldKit {
+export interface FieldKit<V extends FormValues = FormValues> {
   values: FormValues;
   errors: FieldKitErrors;
-  touched: FormikTouched<FormValues>;
+  touched: FormikTouched<V>;
   handleChange: FormikHandlers["handleChange"];
   handleBlur: FormikHandlers["handleBlur"];
-  setFieldValue: FormikHelpers<FormValues>["setFieldValue"];
-  setFieldTouched: FormikHelpers<FormValues>["setFieldTouched"];
-  setFieldError: FormikHelpers<FormValues>["setFieldError"];
+  setFieldValue: FormikHelpers<V>["setFieldValue"];
+  setFieldTouched: FormikHelpers<V>["setFieldTouched"];
+  setFieldError: FormikHelpers<V>["setFieldError"];
 }
 
-export interface FormKit {
+export interface FormKit<V extends FormValues = FormValues> {
   handleSubmit: FormikHandlers["handleSubmit"];
+  values: FormValues;
+  errors: FieldKitErrors;
+  touched: FormikTouched<V>;
+}
+
+export type FormBuilderContextType = {
+  formKit: FormKit;
+  fieldKit: FieldKit;
 }
