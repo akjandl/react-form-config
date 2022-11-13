@@ -5,7 +5,7 @@ import { FieldInstructionBundle, FieldKit } from "../index";
 
 interface FieldGroupProps {
   fieldInstructionBundle: FieldInstructionBundle;
-  fieldKit: FieldKit;
+  fieldKit?: FieldKit;
 }
 
 const FieldGroup = (props: FieldGroupProps) => {

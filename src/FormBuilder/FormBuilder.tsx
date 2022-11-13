@@ -12,7 +12,8 @@ import {
   FormActions,
   FieldKit,
   FormKit,
-} from "../FormBuilder";
+} from "./index";
+import { FormBuilderProvider } from "./FormBuilderContext";
 
 interface FormBuilderProps {
   fieldInstructionBundle: FieldInstructionBundle;
@@ -28,6 +29,7 @@ interface FormBuilderProps {
       }) => JSX.Element);
   enableReinitialize?: boolean;
   overrideDefaultInitialValues?: FormValues;
+  validateOnMount?: boolean;
 }
 
 const FormBuilder = (props: FormBuilderProps) => {
@@ -50,14 +52,21 @@ const FormBuilder = (props: FormBuilderProps) => {
       onSubmit={props.onSubmit}
       validationSchema={validationSchema}
       enableReinitialize={enableReinitialize}
+      validateOnMount={props.validateOnMount}
     >
       {(formikProps) => {
-        return typeof props.children === "function"
-          ? props.children({
-              fieldKit: mapFormikPropsToFieldKit(formikProps),
-              formKit: mapFormikPropsToFormKit(formikProps),
-            })
-          : props.children;
+        const fieldKit = mapFormikPropsToFieldKit(formikProps);
+        const formKit = mapFormikPropsToFormKit(formikProps);
+
+        return (
+          <FormBuilderProvider value={{ fieldKit, formKit }}>
+            {
+              typeof props.children === "function"
+                ? props.children({ fieldKit, formKit })
+                : props.children
+            }
+          </FormBuilderProvider>
+        )
       }}
     </Formik>
   );

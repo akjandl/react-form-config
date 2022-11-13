@@ -207,8 +207,8 @@ export const hasTradeIn: FieldInstruction<typeof ButtonToggle> = {
   Component: ButtonToggle,
   config: {
     label: "Has Trade In",
-    validator: yup.boolean().required("Required"),
-    initialValue: false,
+    validator: yup.boolean().required("Please make a selection"),
+    initialValue: "",
     buttonConfigs: [
       { divClassName: "col-auto", value: false, text: "No" },
       { divClassName: "col-auto", value: true, text: "Yes" },
